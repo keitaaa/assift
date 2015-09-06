@@ -1,0 +1,2 @@
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\bin\Release\shiftwork.exe.config
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Release\シフト補助.csproj.ResolveComReference.cache

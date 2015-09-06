@@ -108,6 +108,7 @@ namespace Shiftwork.Library
 
         /// <summary>
         /// [拡張]起動しているExcelの一覧を取得します。見つからない場合はnullを返します。
+        /// TODO:返り値を2次元配列にして、PID返す。http://stackoverflow.com/questions/8490564/getting-excel-application-process-id
         /// </summary>
         /// <returns>ブック名の文字列配列です。</returns>
         static public string[] ListApps(this Excel.Application application)
@@ -157,7 +158,7 @@ namespace Shiftwork.Library
                         arr.Add(pBook.Name);
 
                         //For Debug
-                        MessageBox.Show(pBook.Name);
+                        //MessageBox.Show(pBook.Name);
                     }
                 }
                 catch (Exception)
@@ -186,11 +187,12 @@ namespace Shiftwork.Library
         /// <summary>
         /// アプリケーションを開放します。
         /// </summary>
-        static public void closeApp(this Excel.Application application)
+        static public Excel.Application closeApp(this Excel.Application application)
         {
             //インスタンスの解放
             Marshal.ReleaseComObject(application);
-            //application = null;
+            application = null;
+            return application;
         }
     }
 }

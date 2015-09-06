@@ -15,10 +15,10 @@ namespace Shiftwork.Library
     public static class ERange
     {
         /// <summary>
-        /// [拡張]Rangeオブジェクトの各行に対して重複をチェックします。
+        /// [拡張]Rangeオブジェクトの各行に対して重複している要素を抽出します。
         /// </summary>
         /// <returns></returns>
-        public static List<int[]> ColumnDuplicateCheck(this Excel.Range range)
+        public static List<int[]> extractDuplicate(this Excel.Range range)
         {
             if (range.Columns.Count >= 2)
             {
@@ -61,7 +61,7 @@ namespace Shiftwork.Library
 
                 foreach (string s in exceptquery)
                 {
-                    ret.Add(Util.Search(columnstring, s));
+                    ret.Add(Util.deepSearch(columnstring, s));
                 }
 
             }

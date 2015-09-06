@@ -60,7 +60,6 @@
             this.ProcesscomboBox.Name = "ProcesscomboBox";
             this.ProcesscomboBox.Size = new System.Drawing.Size(257, 20);
             this.ProcesscomboBox.TabIndex = 2;
-            this.ProcesscomboBox.SelectedIndexChanged += new System.EventHandler(this.ProcesscomboBox_SelectedIndexChanged);
             // 
             // AttachForm
             // 

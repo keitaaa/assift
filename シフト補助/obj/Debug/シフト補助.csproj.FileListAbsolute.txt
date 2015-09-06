@@ -1,0 +1,21 @@
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\bin\Debug\shiftwork.exe.config
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\シフト補助.csproj.ResolveComReference.cache
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\bin\Debug\shiftwork.exe
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\bin\Debug\shiftwork.pdb
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\シフト補助.csprojResolveAssemblyReference.cache
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\shiftwork.Form1.resources
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\shiftwork.Properties.Resources.resources
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\シフト補助.csproj.GenerateResource.Cache
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\shiftwork.exe
+C:\Users\Masahiro\Dropbox\14th 生明祭\シフト\shiftE\シフト補助\obj\Debug\shiftwork.pdb
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\bin\Debug\Shiftwork.exe.config
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\シフト補助.csproj.ResolveComReference.cache
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\シフト補助.csprojResolveAssemblyReference.cache
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\Shiftwork.AttachForm.resources
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\Shiftwork.MainForm.resources
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\Shiftwork.Properties.Resources.resources
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\シフト補助.csproj.GenerateResource.Cache
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\bin\Debug\Shiftwork.exe
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\bin\Debug\Shiftwork.pdb
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\Shiftwork.exe
+C:\Users\Masahiro\Dropbox\shiftE\シフト補助\obj\Debug\Shiftwork.pdb
