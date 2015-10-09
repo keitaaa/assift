@@ -92,7 +92,7 @@
             this.Close});
             this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
             this.ファイルToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.ファイルToolStripMenuItem.Text = "ファイル(F)";
             // 
             // AttachProcess
@@ -133,7 +133,7 @@
             // Function1
             // 
             this.Function1.Name = "Function1";
-            this.Function1.Size = new System.Drawing.Size(104, 22);
+            this.Function1.Size = new System.Drawing.Size(105, 22);
             this.Function1.Text = "機能1";
             this.Function1.Click += new System.EventHandler(this.Function1_Click);
             // 
@@ -144,24 +144,24 @@
             this.toolStripSeparator2,
             this.assiftのバージョン情報ToolStripMenuItem});
             this.ヘルプHToolStripMenuItem.Name = "ヘルプHToolStripMenuItem";
-            this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.ヘルプHToolStripMenuItem.Text = "ヘルプ(H)";
             // 
             // ヘルプの表示ToolStripMenuItem
             // 
             this.ヘルプの表示ToolStripMenuItem.Name = "ヘルプの表示ToolStripMenuItem";
-            this.ヘルプの表示ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.ヘルプの表示ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.ヘルプの表示ToolStripMenuItem.Text = "ヘルプの表示";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(179, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
             // 
             // assiftのバージョン情報ToolStripMenuItem
             // 
             this.assiftのバージョン情報ToolStripMenuItem.Name = "assiftのバージョン情報ToolStripMenuItem";
-            this.assiftのバージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.assiftのバージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.assiftのバージョン情報ToolStripMenuItem.Text = "assift のバージョン情報";
             // 
             // statusStrip1
@@ -229,6 +229,7 @@
             this.showInputBox.TabIndex = 18;
             this.showInputBox.Text = "名前入れの開始";
             this.showInputBox.UseVisualStyleBackColor = true;
+            this.showInputBox.Click += new System.EventHandler(this.showInputBox_Click);
             // 
             // duplicateCheckBox
             // 

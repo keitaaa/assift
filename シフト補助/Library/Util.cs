@@ -93,7 +93,7 @@ namespace Shiftwork.Library
                 }
                 var exceptquery = exceptlist.Distinct<string>();
 
-                foreach(string s in exceptquery)
+                foreach (string s in exceptquery)
                 {
                     ret.Add(s);
                 }
@@ -103,7 +103,37 @@ namespace Shiftwork.Library
         }
         public static Excel.Range MakeRange(Excel.Range range)
         {
-            return null;
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 配列の2列目と引数のbureau,4列目と引数のgradeが一致する行の中から、8列目から16列目に存在する仕事名を抽出します。
+        /// </summary>
+        /// <param name="list">構成員名簿</param>
+        /// <param name="bureau">局</param>
+        /// <param name="grade">学年</param>
+        /// <returns></returns>
+        public static string[] jobSearch(string[,] list, string bureau, string grade)
+        {
+            List<string> jobname = new List<string>();
+            for (int i = 0; i < list.GetUpperBound(0) + 1; i++ )
+            {
+                if ((bureau == "全" || bureau == list[i, 1]) && (grade == "全" || grade == list[i, 3]))
+                {
+                    for (int n = 7; n < 16; n++)
+                    {
+                        if (list[i, n] == null || list[i, n] == "") break;
+                        jobname.Add(list[i, n]);
+                    }
+                }
+            }
+            var query = jobname.Distinct<string>();
+            List<string> tmp = new List<string>();
+            foreach (string s in query)
+            {
+                tmp.Add(s);
+            }
+
+            return tmp.ToArray<string>();
         }
     }
 }

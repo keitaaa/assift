@@ -11,7 +11,7 @@ using Shiftwork;
 
 namespace Shiftwork.Library
 {
-    public static class EWorksheets
+    public static class ESheets
     {
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Shiftwork.Library
         /// </summary>
         /// <param name="sheetName">検索したいワークシート名です。</param>
         /// <returns>ワークシートのインデックスです。</returns>
-        public static int getSheetIndex(this Excel.Worksheets worksheets, string sheetName)
+        public static int getSheetIndex(this Excel.Sheets worksheets, string sheetName)
         {
             int sheetIndex = 0;
             if (!worksheets.Contains(sheetName))
@@ -42,7 +42,7 @@ namespace Shiftwork.Library
         /// </summary>
         /// <param name="sheetName">検索したいワークシート名です。</param>
         /// <returns>存在していればtrue,それ以外はfalseを返します。</returns>
-        public static bool Contains(this Excel.Worksheets worksheets, string sheetName)
+        public static bool Contains(this Excel.Sheets worksheets, string sheetName)
         {
             if (sheetName == null || sheetName == "")
             {

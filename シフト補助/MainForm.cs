@@ -14,20 +14,43 @@ namespace Shiftwork
 {
     public partial class MainForm : Form
     {
+        // コンストラクタ
         public MainForm()
         {
             InitializeComponent();
             toolStripStatusLabel1.Text = "Ready.";
         }
-
+        // 
         public static MainForm _MainFormInstance { get; set; }
-        public Boolean duplicateCheckBoxValue { get; set; }
-        public Boolean autoBackupBoxValue { get; set; }
-        public Boolean pasteasFormulaBoxValue { get; set; }
+        public bool inProrgamUse { get; set; }
+        public bool duplicateCheckBoxValue
+        {
+            get
+            {
+                return duplicateCheckBox.Checked;
+            }
+        }
+        public bool autoBackupBoxValue
+        {
+            get
+            {
+                return autoBackupBox.Checked;
+            }
+        }
+        public bool pasteasFormulaBoxValue
+        {
+            get
+            {
+                return pasteasFormulaBox.Checked;
+            }
+        }
 
 
         Excel.Application app;
         Excel.Workbook book;
+        Excel.Sheets sheets;
+
+        string[,] namelist;
 
         #region menuStrip1
 
@@ -43,8 +66,20 @@ namespace Shiftwork
                 tabControl1.Enabled = true;
 
                 book = app.ActiveWorkbook;
+                sheets = book.Worksheets;
+                namelist = getNamelist();
             }
         }
+        private string[,] getNamelist()
+        {
+            // TODO:例外追加
+            Excel.Worksheet namesheet;
+            namesheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("構成員名簿"));
+            Excel.Range namerange;
+            namerange = namesheet.get_Range("A2", "Q204");
+            return namerange.DeepToString();
+        }
+
         private void DettachProcess_Click(object sender, EventArgs e)
         {
             string s = app.ActiveWorkbook.Name;
@@ -57,6 +92,7 @@ namespace Shiftwork
                 tabControl1.Enabled = false;
 
                 book = null;
+                sheets = null;
             }
         }
         private void Close_Click(object sender, EventArgs e)
@@ -90,28 +126,35 @@ namespace Shiftwork
             stopMonitiorButton.Enabled = true;
             showInputBox.Enabled = true;
 
-            book.SheetChange += new Microsoft.Office.Interop.Excel.WorkbookEvents_SheetChangeEventHandler(Payload.SheetChange.sheetChanged);
+            book.SheetChange += new Excel.WorkbookEvents_SheetChangeEventHandler(Payload.SheetChange.sheetChanged);
             duplicateCheckBox.Enabled = false;
             pasteasFormulaBox.Enabled = false;
-            autoBackupBox.Enabled = false;
+            autoBackupBox.Enabled     = false;
             MainForm._MainFormInstance = this;
         }
 
         private void stopMonitiorButton_Click(object sender, EventArgs e)
         {
+            startMonitorButton.Enabled = true;
+            stopMonitiorButton.Enabled = false;
+            showInputBox.Enabled = false;
 
+            book.SheetChange -= new Excel.WorkbookEvents_SheetChangeEventHandler(Payload.SheetChange.sheetChanged);
+            duplicateCheckBox.Enabled = true;
+            pasteasFormulaBox.Enabled = true;
+            autoBackupBox.Enabled     = true;
+            MainForm._MainFormInstance = this;
         }
 
+        private void showInputBox_Click(object sender, EventArgs e)
+        {
+            EnterName f2 = new EnterName(namelist, app);
+            _MainFormInstance = this;
+            f2.ShowDialog();
+        }
+
+
         #endregion
-        
-
-
-
-        
-
-        
-
-        
 
 
     }

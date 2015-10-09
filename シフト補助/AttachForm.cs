@@ -15,7 +15,7 @@ namespace Shiftwork
     public partial class AttachForm : Form
     {
         static public Excel.Application app_a;
-        static private Boolean isOpen;
+        static private bool isOpen;
 
         public AttachForm(Excel.Application app)
         {
@@ -24,7 +24,7 @@ namespace Shiftwork
             isOpen = UpdateList();
         }
 
-        private Boolean UpdateList()
+        private bool UpdateList()
         {
             try
             {

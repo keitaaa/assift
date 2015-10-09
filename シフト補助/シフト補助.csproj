@@ -66,6 +66,12 @@
     <Compile Include="AttachForm.Designer.cs">
       <DependentUpon>AttachForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnterName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterName.Designer.cs">
+      <DependentUpon>EnterName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Library\Util.cs" />
     <Compile Include="Payload\SheetChange.cs" />
     <Compile Include="Payload\ErrorCheck.cs" />
@@ -73,7 +79,7 @@
     <Compile Include="Library\EApplication.cs" />
     <Compile Include="Library\ERange.cs" />
     <Compile Include="Library\EWorksheet.cs" />
-    <Compile Include="Library\EWorksheets.cs" />
+    <Compile Include="Library\ESheets.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AttachForm.resx">
       <DependentUpon>AttachForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterName.resx">
+      <DependentUpon>EnterName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
