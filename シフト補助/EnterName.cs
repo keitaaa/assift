@@ -152,9 +152,7 @@ namespace Shiftwork
             }
             // selectなのかactiveなのか要調査
             Excel.Range tmprange = jobsheet.Cells[24, selectrange.Column];
-            int jobtype = 500;
-            //int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
-            tmprange = tmprange.get_Resize(jobtype, selectrange.Columns.Count);
+            tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
             string[,] tmp = tmprange.DeepToString();
 
             return (isdeepContained(tmp, name));
