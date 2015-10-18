@@ -14,15 +14,21 @@ namespace Shiftwork
 {
     public partial class MainForm : Form
     {
-        // コンストラクタ
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
             toolStripStatusLabel1.Text = "Ready.";
         }
-        // 
+
+        #region 他インスタンスからの参照用
+
+        /// <summary>
+        /// メインフォームインスタンスの複製
+        /// </summary>
         public static MainForm _MainFormInstance { get; set; }
-        public bool inProrgamUse { get; set; }
         public bool duplicateCheckBoxValue
         {
             get
@@ -45,6 +51,9 @@ namespace Shiftwork
             }
         }
 
+        #endregion 
+
+        public bool inProrgamUse { get; set; }
 
         Excel.Application app;
         Excel.Workbook book;

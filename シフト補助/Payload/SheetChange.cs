@@ -29,9 +29,12 @@ namespace Shiftwork.Payload
         {
             //TODO:再帰呼び出し対策をちゃんとすること
             Excel.Worksheet sheet = (Excel.Worksheet)sh;
-            int start_row = int.Parse(System.Configuration.ConfigurationManager.AppSettings["datastartaddress_row"]);
-            int start_column = int.Parse(System.Configuration.ConfigurationManager.AppSettings["datastartaddress_column"]);
-            int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
+            int start_row = 24;
+            // int start_row = int.Parse(System.Configuration.ConfigurationManager.AppSettings["datastartaddress_row"]);
+            int start_column = 3;
+            // int start_column = int.Parse(System.Configuration.ConfigurationManager.AppSettings["datastartaddress_column"]);
+            int jobtype = 500;
+            // int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
 
             if (sheet.Name != "仕事シフト")
             {
@@ -88,7 +91,8 @@ namespace Shiftwork.Payload
             }
 
 
-            int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
+            int jobtype = 500;
+            // int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
             Excel.Range src = target.Worksheet.Cells[jobtype + 100, 1];
             src.Formula = value;
             src.Copy();
