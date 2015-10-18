@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
-using System.Collections;
 
 namespace Shiftwork
 {
     public partial class EnterName : Form
     {
-        private string[,] namelist;
-        Excel.Application app;
-        Excel.Workbook book;
-        Excel.Sheets sheets;
-        Excel.Worksheet jobsheet;
+        private string[,] namelist;      // 構成員名簿データ
+        Excel.Application app;           // 操作中のアプリケーション
+        Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
+        Excel.Sheets sheets;             // 操作中のワークシートの集合(Sheets -> get_Itemでシート)
+        Excel.Worksheet jobsheet;        // 仕事シフトのワークシート
 
-        ArrayList jobarray;
-        Excel.Range activerange;
-        Excel.Range selectrange;
         /// <summary>
-        /// コンストラクタ
+        /// アクティブなセル（結合セルの場合は単一セル）
+        /// </summary>
+        Excel.Range activerange;
+        /// <summary>
+        /// 選択中のセル（結合セルの場合はすべて）
+        /// </summary>
+        Excel.Range selectrange;
+
+
+        /// <summary>
+        /// EnterNameフォームのコンストラクタです。
+        /// 引数として渡された、構成員名簿データと操作中のアプリケーションを自身のメンバに複製します。
         /// </summary>
         /// <param name="namelist">構成員名簿データ</param>
         /// <param name="app">操作中のExcelアプリケーション</param>
@@ -37,56 +39,86 @@ namespace Shiftwork
         }
 
         /// <summary>
-        /// 最初に開かれた時のメソッドです。
+        /// フォームがロードされた時のメソッドです。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EnterName_Load(object sender, EventArgs e)
         {
+            // アプリケーションからワークシートを接続します
             book = app.ActiveWorkbook;
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
 
-            this.jobBox.SelectedIndexChanged -= new EventHandler(jobBox_SelectedIndexChanged);
+            // フォームの初期化
             jobBox.Items.Clear();
             jobBox.Items.Add("全");
             this.jobBox.SelectedIndex = 0;
-            this.jobBox.SelectedIndexChanged += new EventHandler(jobBox_SelectedIndexChanged);
-            this.Activated += new EventHandler(EnterName_Activated);
             bureauTextBox.Text = "全";
             gradeTextBox.Text = "全";
+
+            // 仕事選択とフォームがアクティブになった時のイベントハンドラの追加
+            this.jobBox.SelectedIndexChanged += new EventHandler(jobBox_SelectedIndexChanged);
+            this.Activated += new EventHandler(EnterName_Activated);
+
             activeCellUpdate();
-
-
         }
 
         #region method using EventHandler
+
+        /// <summary>
+        /// フォームがアクティブになった時に実行されるメソッドです。
+        /// 名前の一覧とアクティブなセルを更新します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void EnterName_Activated(object sender, EventArgs e)
         {
             nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
             activeCellUpdate();
-
         }
 
+        /// <summary>
+        /// 仕事一覧のインデックスが変化した時に実行されるメソッドです。
+        /// 名前の一覧とアクティブなセルを更新します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void jobBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
             activeCellUpdate();
         }
 
-
         #endregion
 
         #region method using update
+        /// <summary>
+        /// 選択しているセルをメンバ変数にコピーします。
+        /// </summary>
         private void activeCellUpdate()
         {
+            // TODO:選択中のアプリケーション
             activerange = app.ActiveCell;
             selectrange = app.Selection;
-            //MessageBox.Show(activerange.Columns.Count.ToString() + "\r\n" + selectrange.Column.ToString());
         }
+
+        /// <summary>
+        /// 名簿リストを更新します。
+        /// TODO:名前シフトに変換したらすごい早いんじゃないかな…？
+        /// </summary>
+        /// <param name="bureau">抽出する局</param>
+        /// <param name="grade">抽出する学年</param>
+        /// <param name="job">抽出する仕事</param>
         private void nameViewUpdate(string bureau, string grade, string job)
         {
-            nameView.Rows.Clear();
+            // 引数がnullの時の例外処理
+            if(bureau == null || grade == null || job == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
@@ -95,14 +127,23 @@ namespace Shiftwork
                     object[] row_value = new object[] { namelist[i,1], namelist[i,2], namelist[i,3], namelist[i,4] ,isFilled(namelist[i,4])?"×":"○"};
                     DataGridViewRow row = new DataGridViewRow();
                    
+                    // セルを作成してから、値を設定(この順番が重要)
                     row.CreateCells(nameView);
                     row.SetValues(row_value);
                     row_list.Add(row);
                 }
             }
+
+            // 既存のデータを消去してから、一度に追加する
+            nameView.Rows.Clear();
             nameView.Rows.AddRange(row_list.ToArray<DataGridViewRow>());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private bool isFilled(string name)
         {
             if(name == null)
@@ -111,8 +152,7 @@ namespace Shiftwork
             }
             // selectなのかactiveなのか要調査
             Excel.Range tmprange = jobsheet.Cells[24, selectrange.Column];
-            int jobtype = int.Parse(System.Configuration.ConfigurationManager.AppSettings["jobtype"]);
-            tmprange = tmprange.get_Resize(jobtype, selectrange.Columns.Count);
+            tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
             string[,] tmp = tmprange.DeepToString();
 
             return (isdeepContained(tmp, name));
@@ -140,6 +180,7 @@ namespace Shiftwork
             }
             return false;
         }
+
         private void jobBoxUpdate(string bureau, string grade)
         {
             this.jobBox.SelectedIndexChanged -= new EventHandler(jobBox_SelectedIndexChanged);
