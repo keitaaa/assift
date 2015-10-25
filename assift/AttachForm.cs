@@ -7,71 +7,67 @@ namespace Shiftwork
 {
     public partial class AttachForm : Form
     {
-        static public Excel.Application app_a;
+        static public Excel.Workbook book;
         static private bool isOpen;
 
-        public AttachForm(Excel.Application app)
+        public AttachForm(Excel.Workbook book)
         {
             InitializeComponent();
-            Shiftwork.AttachForm.app_a = app;
+            Shiftwork.AttachForm.book = book;
             isOpen = UpdateList();
         }
 
         private bool UpdateList()
         {
+            string[] process = null;
             try
             {
-                string[] process_t = app_a.ListApps();
+                process = book.ListBook();
             }
             catch (NullReferenceException ne)
             {
-                String errorMessage;
+                string errorMessage;
                 errorMessage = "Error: ";
-                errorMessage = String.Concat(errorMessage, ne.Message);
-                errorMessage = String.Concat(errorMessage, "\nLine: ");
-                errorMessage = String.Concat(errorMessage, ne.Source);
-                errorMessage = String.Concat(errorMessage, "\n");
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK,
-    MessageBoxIcon.Error);
+                errorMessage = string.Concat(errorMessage, ne.Message);
+                errorMessage = string.Concat(errorMessage, "\nLine: ");
+                errorMessage = string.Concat(errorMessage, ne.Source);
+                errorMessage = string.Concat(errorMessage, "\n");
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            string[] process = app_a.ListApps();
-            
-            foreach (string s in process)
-            {
-                ProcesscomboBox.Items.Add(s);
-                ProcesscomboBox.SelectedIndex = 0;
-            }
+
+            ProcesscomboBox.Items.AddRange(process);
+            ProcesscomboBox.SelectedIndex = 0;
+
             return true;
         }
         private void AttachButton_Click(object sender, EventArgs e)
         {
             try
             {
-                app_a = app_a.setApps(ProcesscomboBox.SelectedItem.ToString());
+                book = book.setBook(ProcesscomboBox.SelectedItem.ToString());
             }
             catch (NullReferenceException ne)
             {
-                String errorMessage;
+                string errorMessage;
                 errorMessage = "Error: ";
-                errorMessage = String.Concat(errorMessage, ne.Message);
-                errorMessage = String.Concat(errorMessage, "\nLine: ");
-                errorMessage = String.Concat(errorMessage, ne.Source);
-                errorMessage = String.Concat(errorMessage, "\n");
-                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK,
-    MessageBoxIcon.Error);
+                errorMessage = string.Concat(errorMessage, ne.Message);
+                errorMessage = string.Concat(errorMessage, "\nLine: ");
+                errorMessage = string.Concat(errorMessage, ne.Source);
+                errorMessage = string.Concat(errorMessage, "\n");
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            this.Close();
+            Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
-        public static Excel.Application ShowForm(Excel.Application app)
+        public static Excel.Workbook ShowForm(Excel.Workbook book)
         {
-            AttachForm f = new AttachForm(app);
+            AttachForm f = new AttachForm(book);
             if(!isOpen)
             {
                 f.Dispose();
@@ -79,7 +75,7 @@ namespace Shiftwork
             }
             f.ShowDialog();
             f.Dispose();
-            return app_a;
+            return book;
         }
     }
 }
