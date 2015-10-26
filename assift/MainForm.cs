@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
-
+//hal
 namespace Shiftwork
 {
     public partial class MainForm : Form
@@ -111,11 +111,12 @@ namespace Shiftwork
         #region TBD
         private void Function1_Click(object sender, EventArgs e)
         {
-            //app.ListApps();
-            //app = app.setApps("Book1");
-            //Excel.Range test = app.Selection;
-            //MessageBox.Show("test.");
-            //app.closeApp();
+            book.SheetDeactivate += new Excel.WorkbookEvents_SheetDeactivateEventHandler(Book_SheetDeactivate);
+        }
+
+        private void Book_SheetDeactivate(object Sh)
+        {
+            MessageBox.Show(book.Application.ActiveCell.get_Address());
         }
         #endregion //TBD
         #endregion //menuStrip1

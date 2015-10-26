@@ -10,7 +10,6 @@ namespace Shiftwork
     public partial class EnterName : Form
     {
         private string[,] namelist;      // 構成員名簿データ
-        Excel.Application app;           // 操作中のアプリケーション
         Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
         Excel.Sheets sheets;             // 操作中のワークシートの集合(Sheets -> get_Itemでシート)
         Excel.Worksheet jobsheet;        // 仕事シフトのワークシート
@@ -31,11 +30,11 @@ namespace Shiftwork
         /// </summary>
         /// <param name="namelist">構成員名簿データ</param>
         /// <param name="app">操作中のExcelアプリケーション</param>
-        public EnterName(string[,] namelist, Excel.Application app)
+        public EnterName(string[,] namelist, Excel.Workbook book)
         {
             InitializeComponent();
             this.namelist = namelist;
-            this.app = app;
+            this.book = book;
         }
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         private void EnterName_Load(object sender, EventArgs e)
         {
-            // アプリケーションからワークシートを接続します
-            book = app.ActiveWorkbook;
+            // ワークブックからワークシートを接続します
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
 
@@ -54,11 +52,15 @@ namespace Shiftwork
             jobBox.Items.Clear();
             jobBox.Items.Add("全");
             this.jobBox.SelectedIndex = 0;
+            jobBox2.Items.Clear();
+            jobBox2.Items.Add("全");
+            this.jobBox2.SelectedIndex = 0;
             bureauTextBox.Text = "全";
             gradeTextBox.Text = "全";
 
             // 仕事選択とフォームがアクティブになった時のイベントハンドラの追加
             this.jobBox.SelectedIndexChanged += new EventHandler(jobBox_SelectedIndexChanged);
+            this.jobBox2.SelectedIndexChanged += new EventHandler(jobBox2_SelectedIndexChanged);
             this.Activated += new EventHandler(EnterName_Activated);
 
             activeCellUpdate();
@@ -74,7 +76,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         void EnterName_Activated(object sender, EventArgs e)
         {
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
         }
 
@@ -86,10 +88,14 @@ namespace Shiftwork
         /// <param name="e"></param>
         void jobBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
         }
-
+        void jobBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text,jobBox.SelectedItem.ToString() ,jobBox2.SelectedItem.ToString());
+            activeCellUpdate();
+        }
         #endregion
 
         #region method using update
@@ -99,8 +105,13 @@ namespace Shiftwork
         private void activeCellUpdate()
         {
             // TODO:選択中のアプリケーション
-            activerange = app.ActiveCell;
-            selectrange = app.Selection;
+            book.Application.ScreenUpdating = false;
+            jobsheet.Activate();
+            activerange = book.Application.ActiveCell;
+            selectrange = book.Application.Selection;
+            Focus();
+            book.Application.ScreenUpdating = true;
+            
         }
 
         /// <summary>
@@ -113,7 +124,7 @@ namespace Shiftwork
         private void nameViewUpdate(string bureau, string grade, string job)
         {
             // 引数がnullの時の例外処理
-            if(bureau == null || grade == null || job == null)
+            if (bureau == null || grade == null || job == null)
             {
                 throw new ArgumentNullException();
             }
@@ -122,18 +133,42 @@ namespace Shiftwork
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
-                if ((bureau == "全" || bureau == namelist[i,1]) && (grade == "全" || grade == namelist[i,3]) && (job == "全" || isJobContained(job, i)))
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && (job == "全" || isJobContained(job, i)))
                 {
-                    object[] row_value = new object[] { namelist[i,1], namelist[i,2], namelist[i,3], namelist[i,4] ,isFilled(namelist[i,4])?"×":"○"};
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
                     DataGridViewRow row = new DataGridViewRow();
-                   
+
                     // セルを作成してから、値を設定(この順番が重要)
                     row.CreateCells(nameView);
                     row.SetValues(row_value);
                     row_list.Add(row);
                 }
             }
+        }
 
+        private void nameViewUpdate2(string bureau, string grade, string job,string job2)
+        {
+            // 引数がnullの時の例外処理
+            if (bureau == null || grade == null || job == null || job2 ==null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            // 追加するデータの検索
+            List<DataGridViewRow> row_list = new List<DataGridViewRow>();
+            for (int i = 0; i <= namelist.GetUpperBound(0); i++)
+            {
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
+                {
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
+                    DataGridViewRow row = new DataGridViewRow();
+
+                    // セルを作成してから、値を設定(この順番が重要)
+                    row.CreateCells(nameView);
+                    row.SetValues(row_value);
+                    row_list.Add(row);
+                }
+            }
             // 既存のデータを消去してから、一度に追加する
             nameView.Rows.Clear();
             nameView.Rows.AddRange(row_list.ToArray<DataGridViewRow>());
@@ -184,11 +219,21 @@ namespace Shiftwork
         private void jobBoxUpdate(string bureau, string grade)
         {
             this.jobBox.SelectedIndexChanged -= new EventHandler(jobBox_SelectedIndexChanged);
+            this.jobBox2.SelectedIndexChanged -= new EventHandler(jobBox2_SelectedIndexChanged);
+
             jobBox.Items.Clear();
             jobBox.Items.Add("全");
+            jobBox2.Items.Clear();
+            jobBox2.Items.Add("全");
+
             jobBox.Items.AddRange(Util.jobSearch(namelist, bureau, grade));
+            jobBox2.Items.AddRange(Util.jobSearch(namelist, bureau, grade));
+
             this.jobBox.SelectedIndex = 0;
             this.jobBox.SelectedIndexChanged += new EventHandler(jobBox_SelectedIndexChanged);
+            this.jobBox2.SelectedIndex = 0;
+            this.jobBox2.SelectedIndexChanged += new EventHandler(jobBox2_SelectedIndexChanged);
+
         }
         #endregion
 
@@ -201,7 +246,7 @@ namespace Shiftwork
             bureauTextBox.Text = "全";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -211,7 +256,7 @@ namespace Shiftwork
             bureauTextBox.Text = "執行";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -221,7 +266,7 @@ namespace Shiftwork
             bureauTextBox.Text = "広報";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -231,7 +276,7 @@ namespace Shiftwork
             bureauTextBox.Text = "企画";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -241,7 +286,7 @@ namespace Shiftwork
             bureauTextBox.Text = "装飾";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -251,7 +296,7 @@ namespace Shiftwork
             bureauTextBox.Text = "施設";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -261,7 +306,7 @@ namespace Shiftwork
             bureauTextBox.Text = "事務";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(),jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -271,7 +316,7 @@ namespace Shiftwork
             gradeTextBox.Text = "全";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -281,7 +326,7 @@ namespace Shiftwork
             gradeTextBox.Text = "1";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(),jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -291,7 +336,7 @@ namespace Shiftwork
             gradeTextBox.Text = "2";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -301,7 +346,7 @@ namespace Shiftwork
             gradeTextBox.Text = "3";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }
@@ -311,7 +356,7 @@ namespace Shiftwork
             gradeTextBox.Text = "4";
             sendButton.Enabled = false;
             jobBoxUpdate(bureauTextBox.Text, gradeTextBox.Text);
-            nameViewUpdate(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString());
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             sendButton.Enabled = true;
         }

@@ -45,18 +45,19 @@
             this.gra1 = new System.Windows.Forms.Button();
             this.graAll = new System.Windows.Forms.Button();
             this.jobGroup = new System.Windows.Forms.GroupBox();
+            this.jobBox2 = new System.Windows.Forms.ComboBox();
             this.jobBox = new System.Windows.Forms.ComboBox();
             this.nameView = new System.Windows.Forms.DataGridView();
-            this.bureauTextBox = new System.Windows.Forms.TextBox();
-            this.gradeTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.sendButton = new System.Windows.Forms.Button();
             this.bulColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.graColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emptyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bureauTextBox = new System.Windows.Forms.TextBox();
+            this.gradeTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.sendButton = new System.Windows.Forms.Button();
             this.bulGroup.SuspendLayout();
             this.graGroup.SuspendLayout();
             this.jobGroup.SuspendLayout();
@@ -235,13 +236,23 @@
             // 
             // jobGroup
             // 
+            this.jobGroup.Controls.Add(this.jobBox2);
             this.jobGroup.Controls.Add(this.jobBox);
-            this.jobGroup.Location = new System.Drawing.Point(16, 141);
+            this.jobGroup.Location = new System.Drawing.Point(10, 141);
             this.jobGroup.Name = "jobGroup";
-            this.jobGroup.Size = new System.Drawing.Size(314, 52);
+            this.jobGroup.Size = new System.Drawing.Size(320, 83);
             this.jobGroup.TabIndex = 14;
             this.jobGroup.TabStop = false;
             this.jobGroup.Text = "仕事";
+            // 
+            // jobBox2
+            // 
+            this.jobBox2.FormattingEnabled = true;
+            this.jobBox2.Location = new System.Drawing.Point(41, 48);
+            this.jobBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.jobBox2.Name = "jobBox2";
+            this.jobBox2.Size = new System.Drawing.Size(265, 20);
+            this.jobBox2.TabIndex = 0;
             // 
             // jobBox
             // 
@@ -260,7 +271,7 @@
             this.graColumn,
             this.nameColumn,
             this.emptyColumn});
-            this.nameView.Location = new System.Drawing.Point(9, 224);
+            this.nameView.Location = new System.Drawing.Point(10, 263);
             this.nameView.MultiSelect = false;
             this.nameView.Name = "nameView";
             this.nameView.ReadOnly = true;
@@ -269,10 +280,49 @@
             this.nameView.Size = new System.Drawing.Size(314, 263);
             this.nameView.TabIndex = 15;
             // 
+            // bulColumn
+            // 
+            this.bulColumn.DataPropertyName = "bulColumn";
+            this.bulColumn.HeaderText = "局";
+            this.bulColumn.Name = "bulColumn";
+            this.bulColumn.ReadOnly = true;
+            this.bulColumn.Width = 55;
+            // 
+            // posColumn
+            // 
+            this.posColumn.DataPropertyName = "posColumn";
+            this.posColumn.HeaderText = "役職";
+            this.posColumn.Name = "posColumn";
+            this.posColumn.ReadOnly = true;
+            this.posColumn.Width = 55;
+            // 
+            // graColumn
+            // 
+            this.graColumn.DataPropertyName = "graColumn";
+            this.graColumn.HeaderText = "年";
+            this.graColumn.Name = "graColumn";
+            this.graColumn.ReadOnly = true;
+            this.graColumn.Width = 20;
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.DataPropertyName = "nameColumn";
+            this.nameColumn.HeaderText = "名前";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            // 
+            // emptyColumn
+            // 
+            this.emptyColumn.DataPropertyName = "emptyColumn";
+            this.emptyColumn.HeaderText = "空";
+            this.emptyColumn.Name = "emptyColumn";
+            this.emptyColumn.ReadOnly = true;
+            this.emptyColumn.Width = 20;
+            // 
             // bureauTextBox
             // 
             this.bureauTextBox.Enabled = false;
-            this.bureauTextBox.Location = new System.Drawing.Point(16, 199);
+            this.bureauTextBox.Location = new System.Drawing.Point(22, 230);
             this.bureauTextBox.Name = "bureauTextBox";
             this.bureauTextBox.Size = new System.Drawing.Size(62, 19);
             this.bureauTextBox.TabIndex = 16;
@@ -280,7 +330,7 @@
             // gradeTextBox
             // 
             this.gradeTextBox.Enabled = false;
-            this.gradeTextBox.Location = new System.Drawing.Point(107, 199);
+            this.gradeTextBox.Location = new System.Drawing.Point(105, 230);
             this.gradeTextBox.Name = "gradeTextBox";
             this.gradeTextBox.Size = new System.Drawing.Size(62, 19);
             this.gradeTextBox.TabIndex = 17;
@@ -288,7 +338,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 202);
+            this.label1.Location = new System.Drawing.Point(82, 236);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 18;
@@ -297,7 +347,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(175, 202);
+            this.label2.Location = new System.Drawing.Point(172, 236);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(143, 12);
             this.label2.TabIndex = 19;
@@ -305,7 +355,7 @@
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(144, 493);
+            this.sendButton.Location = new System.Drawing.Point(138, 532);
             this.sendButton.Name = "sendButton";
             this.sendButton.Size = new System.Drawing.Size(59, 19);
             this.sendButton.TabIndex = 14;
@@ -313,45 +363,11 @@
             this.sendButton.UseVisualStyleBackColor = true;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
             // 
-            // bulColumn
-            // 
-            this.bulColumn.DataPropertyName = "bulColumn";
-            this.bulColumn.HeaderText = "局";
-            this.bulColumn.Name = "bulColumn";
-            this.bulColumn.Width = 55;
-            // 
-            // posColumn
-            // 
-            this.posColumn.DataPropertyName = "posColumn";
-            this.posColumn.HeaderText = "役職";
-            this.posColumn.Name = "posColumn";
-            this.posColumn.Width = 55;
-            // 
-            // graColumn
-            // 
-            this.graColumn.DataPropertyName = "graColumn";
-            this.graColumn.HeaderText = "年";
-            this.graColumn.Name = "graColumn";
-            this.graColumn.Width = 20;
-            // 
-            // nameColumn
-            // 
-            this.nameColumn.DataPropertyName = "nameColumn";
-            this.nameColumn.HeaderText = "名前";
-            this.nameColumn.Name = "nameColumn";
-            // 
-            // emptyColumn
-            // 
-            this.emptyColumn.DataPropertyName = "emptyColumn";
-            this.emptyColumn.HeaderText = "空";
-            this.emptyColumn.Name = "emptyColumn";
-            this.emptyColumn.Width = 20;
-            // 
             // EnterName
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(335, 524);
+            this.ClientSize = new System.Drawing.Size(335, 554);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -361,6 +377,7 @@
             this.Controls.Add(this.jobGroup);
             this.Controls.Add(this.graGroup);
             this.Controls.Add(this.bulGroup);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EnterName";
             this.Text = "名前入れ";
             this.Load += new System.EventHandler(this.EnterName_Load);
@@ -404,5 +421,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn graColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emptyColumn;
+        private System.Windows.Forms.ComboBox jobBox2;
     }
 }

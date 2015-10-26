@@ -26,7 +26,6 @@ namespace Shiftwork.Library
         static public Excel.Workbook setBook(this Excel.Workbook book, string workbookName)
         {
             Boolean isSuccessed = false;
-            Excel.Workbook pBook = null;
 
             if (workbookName == null || workbookName == "")
             {
@@ -65,7 +64,7 @@ namespace Shiftwork.Library
 
 
                 object obj = null;
-                pBook = null;
+                Excel.Workbook pBook = null;
                 try
                 {
                     pMonikers[0].BindToObject(pBindCtx, null, ref IID_IUnknown, out obj);
@@ -75,6 +74,7 @@ namespace Shiftwork.Library
                     if (pBook != null && pBook.Name == workbookName)
                     {
                         isSuccessed = true;
+                        book = pBook;
                         break;
                     }
                 }
@@ -97,7 +97,7 @@ namespace Shiftwork.Library
             {
                 throw new NullReferenceException("起動中のExcelインスタンスが見つかりませんでした。");
             }
-            return pBook;
+            return book;
         }
 
 

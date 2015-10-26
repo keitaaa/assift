@@ -7,13 +7,13 @@ namespace Shiftwork
 {
     public partial class AttachForm : Form
     {
-        static public Excel.Workbook book;
+        static private Excel.Workbook book;
         static private bool isOpen;
 
         public AttachForm(Excel.Workbook book)
         {
             InitializeComponent();
-            Shiftwork.AttachForm.book = book;
+            AttachForm.book = book;
             isOpen = UpdateList();
         }
 
@@ -75,7 +75,7 @@ namespace Shiftwork
             }
             f.ShowDialog();
             f.Dispose();
-            return book;
+            return AttachForm.book;
         }
     }
 }
