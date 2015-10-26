@@ -133,7 +133,7 @@
             // Function1
             // 
             this.Function1.Name = "Function1";
-            this.Function1.Size = new System.Drawing.Size(105, 22);
+            this.Function1.Size = new System.Drawing.Size(152, 22);
             this.Function1.Text = "機能1";
             this.Function1.Click += new System.EventHandler(this.Function1_Click);
             // 
