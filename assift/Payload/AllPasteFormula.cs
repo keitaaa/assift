@@ -12,7 +12,7 @@ namespace Shiftwork.Payload
         public static void Run(Excel.Application app)
         {
             app.ScreenUpdating = false;
-            //MainForm._MainFormInstance.inProrgamUse = true;
+            MainForm._MainFormInstance.inProrgamUse = true;
 
             int Rows = 24, Columns = 3;   //Rowがy座標
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
@@ -25,9 +25,12 @@ namespace Shiftwork.Payload
             Excel.Range wholeRange = null;      //結合されたセル全体です
             string value = "";
             int cellCount = 0;
-            for (Rows = 24; Rows < 500; Rows++) {
+            for (Rows = 24; Rows < 500; Rows++)
+            {
                 for (Columns = 3 ; Columns < 100; Columns++)
                 {
+                    current = jobsheet.Cells[Rows, Columns];
+
                     if (current.MergeCells)    //セルの結合判定
                     {
                         if (current.get_Value() == null) { }
@@ -49,17 +52,19 @@ namespace Shiftwork.Payload
                             t.Start();
                             t.Join();
 
-                            //MainForm._MainFormInstance.inProrgamUse = false;
+                           
 
-                            cellCount = wholeRange.Count;
-                            Columns += cellCount;
+                            Columns += wholeRange.Columns.Count;
+                            Columns--;
+                            //Columns += cellCount;
                         }
                     }
                 }
 
             }
+            MainForm._MainFormInstance.inProrgamUse = false;
             app.ScreenUpdating = true;
-            //終了したときにメッセージボックスとか出してみたいけどやり方わかりません
+            MessageBox.Show("終わったよ！");
         }
         public static void clearClipboard()
         {

@@ -125,6 +125,7 @@ namespace Shiftwork
 
         private void allPaste_Click(object sender, EventArgs e)
         {
+            MainForm._MainFormInstance = this;
             AllPasteFormula.Run(app);
         }
         #endregion //TBD
