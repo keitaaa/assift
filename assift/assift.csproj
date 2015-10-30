@@ -91,6 +91,7 @@
     <Compile Include="EnterName.Designer.cs">
       <DependentUpon>EnterName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Library\EWorkbook.cs" />
     <Compile Include="Library\Util.cs" />
     <Compile Include="Payload\AllPasteFormula.cs" />
     <Compile Include="Payload\SheetChange.cs" />

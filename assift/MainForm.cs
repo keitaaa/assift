@@ -53,7 +53,6 @@ namespace Shiftwork
 
         public bool inProrgamUse { get; set; }
 
-        Excel.Application app;
         Excel.Workbook book;
         Excel.Sheets sheets;
 
@@ -64,15 +63,14 @@ namespace Shiftwork
         #region fileMenuStrip
         private void AttachProcess_Click(object sender, EventArgs e)
         {
-            app = AttachForm.ShowForm(app);
-            if (app != null)
+            book = AttachForm.ShowForm(book);
+            if (book != null)
             {
                 AttachProcess.Enabled = false;
                 DettachProcess.Enabled = true;
-                toolStripStatusLabel1.Text = "Attached.  " + app.ActiveWorkbook.Name;
+                toolStripStatusLabel1.Text = "Attached.  " + book.Name;
                 tabControl1.Enabled = true;
 
-                book = app.ActiveWorkbook;
                 sheets = book.Worksheets;
                 namelist = getNamelist();
             }
@@ -89,25 +87,23 @@ namespace Shiftwork
 
         private void DettachProcess_Click(object sender, EventArgs e)
         {
-            string s = app.ActiveWorkbook.Name;
-            app = app.closeApp();
-            if (app == null)
+            string bookName = book.Name;
+            book = book.closeBook();
+            if (book == null)
             {
                 AttachProcess.Enabled = true;
                 DettachProcess.Enabled = false;
-                toolStripStatusLabel1.Text = "Dettached.  " + s;
+                toolStripStatusLabel1.Text = "Dettached.  " + bookName;
                 tabControl1.Enabled = false;
 
-                book = null;
                 sheets = null;
             }
         }
         private void Close_Click(object sender, EventArgs e)
         {
-            if (app != null)
+            if (book != null)
             {
-                app = app.closeApp();
-                book = null;
+                book = book.closeBook();
             }
             this.Close();
         }
@@ -116,11 +112,12 @@ namespace Shiftwork
         #region TBD
         private void Function1_Click(object sender, EventArgs e)
         {
-            //app.ListApps();
-            //app = app.setApps("Book1");
-            //Excel.Range test = app.Selection;
-            //MessageBox.Show("test.");
-            //app.closeApp();
+            book.SheetDeactivate += new Excel.WorkbookEvents_SheetDeactivateEventHandler(Book_SheetDeactivate);
+        }
+
+        private void Book_SheetDeactivate(object Sh)
+        {
+            MessageBox.Show(book.Application.ActiveCell.get_Address());
         }
 
         private void allPaste_Click(object sender, EventArgs e)
@@ -161,7 +158,7 @@ namespace Shiftwork
 
         private void showInputBox_Click(object sender, EventArgs e)
         {
-            EnterName f2 = new EnterName(namelist, app);
+            EnterName f2 = new EnterName(namelist, book);
             _MainFormInstance = this;
             f2.ShowDialog();
         }

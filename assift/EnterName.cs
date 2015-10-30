@@ -10,7 +10,6 @@ namespace Shiftwork
     public partial class EnterName : Form
     {
         private string[,] namelist;      // 構成員名簿データ
-        Excel.Application app;           // 操作中のアプリケーション
         Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
         Excel.Sheets sheets;             // 操作中のワークシートの集合(Sheets -> get_Itemでシート)
         Excel.Worksheet jobsheet;        // 仕事シフトのワークシート
@@ -31,11 +30,11 @@ namespace Shiftwork
         /// </summary>
         /// <param name="namelist">構成員名簿データ</param>
         /// <param name="app">操作中のExcelアプリケーション</param>
-        public EnterName(string[,] namelist, Excel.Application app)
+        public EnterName(string[,] namelist, Excel.Workbook book)
         {
             InitializeComponent();
             this.namelist = namelist;
-            this.app = app;
+            this.book = book;
         }
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         private void EnterName_Load(object sender, EventArgs e)
         {
-            // アプリケーションからワークシートを接続します
-            book = app.ActiveWorkbook;
+            // ワークブックからワークシートを接続します
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
 
@@ -107,8 +105,13 @@ namespace Shiftwork
         private void activeCellUpdate()
         {
             // TODO:選択中のアプリケーション
-            activerange = app.ActiveCell;
-            selectrange = app.Selection;
+            book.Application.ScreenUpdating = false;
+            jobsheet.Activate();
+            activerange = book.Application.ActiveCell;
+            selectrange = book.Application.Selection;
+            Focus();
+            book.Application.ScreenUpdating = true;
+            
         }
 
         /// <summary>

@@ -74,21 +74,18 @@
             this.bulGroup.Controls.Add(this.bulShikko);
             this.bulGroup.Controls.Add(this.groupBox2);
             this.bulGroup.Controls.Add(this.bulAll);
-            this.bulGroup.Location = new System.Drawing.Point(21, 31);
-            this.bulGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.bulGroup.Location = new System.Drawing.Point(16, 25);
             this.bulGroup.Name = "bulGroup";
-            this.bulGroup.Padding = new System.Windows.Forms.Padding(4);
-            this.bulGroup.Size = new System.Drawing.Size(419, 65);
+            this.bulGroup.Size = new System.Drawing.Size(314, 52);
             this.bulGroup.TabIndex = 0;
             this.bulGroup.TabStop = false;
             this.bulGroup.Text = "局";
             // 
             // bulShisetu
             // 
-            this.bulShisetu.Location = new System.Drawing.Point(301, 15);
-            this.bulShisetu.Margin = new System.Windows.Forms.Padding(4);
+            this.bulShisetu.Location = new System.Drawing.Point(226, 12);
             this.bulShisetu.Name = "bulShisetu";
-            this.bulShisetu.Size = new System.Drawing.Size(51, 42);
+            this.bulShisetu.Size = new System.Drawing.Size(38, 34);
             this.bulShisetu.TabIndex = 18;
             this.bulShisetu.Text = "施設";
             this.bulShisetu.UseVisualStyleBackColor = true;
@@ -96,10 +93,9 @@
             // 
             // bulJimu
             // 
-            this.bulJimu.Location = new System.Drawing.Point(360, 15);
-            this.bulJimu.Margin = new System.Windows.Forms.Padding(4);
+            this.bulJimu.Location = new System.Drawing.Point(270, 12);
             this.bulJimu.Name = "bulJimu";
-            this.bulJimu.Size = new System.Drawing.Size(51, 42);
+            this.bulJimu.Size = new System.Drawing.Size(38, 34);
             this.bulJimu.TabIndex = 19;
             this.bulJimu.Text = "事務";
             this.bulJimu.UseVisualStyleBackColor = true;
@@ -107,10 +103,9 @@
             // 
             // bulSoushoku
             // 
-            this.bulSoushoku.Location = new System.Drawing.Point(237, 15);
-            this.bulSoushoku.Margin = new System.Windows.Forms.Padding(4);
+            this.bulSoushoku.Location = new System.Drawing.Point(178, 12);
             this.bulSoushoku.Name = "bulSoushoku";
-            this.bulSoushoku.Size = new System.Drawing.Size(51, 42);
+            this.bulSoushoku.Size = new System.Drawing.Size(38, 34);
             this.bulSoushoku.TabIndex = 16;
             this.bulSoushoku.Text = "装飾";
             this.bulSoushoku.UseVisualStyleBackColor = true;
@@ -118,10 +113,9 @@
             // 
             // bulKoho
             // 
-            this.bulKoho.Location = new System.Drawing.Point(117, 15);
-            this.bulKoho.Margin = new System.Windows.Forms.Padding(4);
+            this.bulKoho.Location = new System.Drawing.Point(88, 12);
             this.bulKoho.Name = "bulKoho";
-            this.bulKoho.Size = new System.Drawing.Size(51, 42);
+            this.bulKoho.Size = new System.Drawing.Size(38, 34);
             this.bulKoho.TabIndex = 15;
             this.bulKoho.Text = "広報";
             this.bulKoho.UseVisualStyleBackColor = true;
@@ -129,10 +123,9 @@
             // 
             // bulKikaku
             // 
-            this.bulKikaku.Location = new System.Drawing.Point(176, 15);
-            this.bulKikaku.Margin = new System.Windows.Forms.Padding(4);
+            this.bulKikaku.Location = new System.Drawing.Point(132, 12);
             this.bulKikaku.Name = "bulKikaku";
-            this.bulKikaku.Size = new System.Drawing.Size(51, 42);
+            this.bulKikaku.Size = new System.Drawing.Size(38, 34);
             this.bulKikaku.TabIndex = 17;
             this.bulKikaku.Text = "企画";
             this.bulKikaku.UseVisualStyleBackColor = true;
@@ -140,10 +133,9 @@
             // 
             // bulShikko
             // 
-            this.bulShikko.Location = new System.Drawing.Point(55, 15);
-            this.bulShikko.Margin = new System.Windows.Forms.Padding(4);
+            this.bulShikko.Location = new System.Drawing.Point(41, 12);
             this.bulShikko.Name = "bulShikko";
-            this.bulShikko.Size = new System.Drawing.Size(51, 42);
+            this.bulShikko.Size = new System.Drawing.Size(38, 34);
             this.bulShikko.TabIndex = 14;
             this.bulShikko.Text = "執行";
             this.bulShikko.UseVisualStyleBackColor = true;
@@ -151,21 +143,18 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(36, 132);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(27, 106);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(267, 125);
+            this.groupBox2.Size = new System.Drawing.Size(200, 100);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
             // 
             // bulAll
             // 
-            this.bulAll.Location = new System.Drawing.Point(8, 30);
-            this.bulAll.Margin = new System.Windows.Forms.Padding(4);
+            this.bulAll.Location = new System.Drawing.Point(6, 24);
             this.bulAll.Name = "bulAll";
-            this.bulAll.Size = new System.Drawing.Size(39, 28);
+            this.bulAll.Size = new System.Drawing.Size(29, 22);
             this.bulAll.TabIndex = 3;
             this.bulAll.Text = "全";
             this.bulAll.UseVisualStyleBackColor = true;
@@ -179,32 +168,27 @@
             this.graGroup.Controls.Add(this.gra2);
             this.graGroup.Controls.Add(this.gra1);
             this.graGroup.Controls.Add(this.graAll);
-            this.graGroup.Location = new System.Drawing.Point(21, 104);
-            this.graGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.graGroup.Location = new System.Drawing.Point(16, 83);
             this.graGroup.Name = "graGroup";
-            this.graGroup.Padding = new System.Windows.Forms.Padding(4);
-            this.graGroup.Size = new System.Drawing.Size(419, 65);
+            this.graGroup.Size = new System.Drawing.Size(314, 52);
             this.graGroup.TabIndex = 2;
             this.graGroup.TabStop = false;
             this.graGroup.Text = "学年";
             // 
             // groupBox4
             // 
-            this.groupBox4.Location = new System.Drawing.Point(36, 132);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Location = new System.Drawing.Point(27, 106);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(267, 125);
+            this.groupBox4.Size = new System.Drawing.Size(200, 100);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "groupBox4";
             // 
             // gra4
             // 
-            this.gra4.Location = new System.Drawing.Point(329, 15);
-            this.gra4.Margin = new System.Windows.Forms.Padding(4);
+            this.gra4.Location = new System.Drawing.Point(247, 12);
             this.gra4.Name = "gra4";
-            this.gra4.Size = new System.Drawing.Size(79, 42);
+            this.gra4.Size = new System.Drawing.Size(59, 34);
             this.gra4.TabIndex = 9;
             this.gra4.Text = "4年";
             this.gra4.UseVisualStyleBackColor = true;
@@ -212,10 +196,9 @@
             // 
             // gra3
             // 
-            this.gra3.Location = new System.Drawing.Point(240, 15);
-            this.gra3.Margin = new System.Windows.Forms.Padding(4);
+            this.gra3.Location = new System.Drawing.Point(180, 12);
             this.gra3.Name = "gra3";
-            this.gra3.Size = new System.Drawing.Size(79, 42);
+            this.gra3.Size = new System.Drawing.Size(59, 34);
             this.gra3.TabIndex = 10;
             this.gra3.Text = "3年";
             this.gra3.UseVisualStyleBackColor = true;
@@ -223,10 +206,9 @@
             // 
             // gra2
             // 
-            this.gra2.Location = new System.Drawing.Point(151, 15);
-            this.gra2.Margin = new System.Windows.Forms.Padding(4);
+            this.gra2.Location = new System.Drawing.Point(113, 12);
             this.gra2.Name = "gra2";
-            this.gra2.Size = new System.Drawing.Size(79, 42);
+            this.gra2.Size = new System.Drawing.Size(59, 34);
             this.gra2.TabIndex = 11;
             this.gra2.Text = "2年";
             this.gra2.UseVisualStyleBackColor = true;
@@ -234,10 +216,9 @@
             // 
             // gra1
             // 
-            this.gra1.Location = new System.Drawing.Point(61, 15);
-            this.gra1.Margin = new System.Windows.Forms.Padding(4);
+            this.gra1.Location = new System.Drawing.Point(46, 12);
             this.gra1.Name = "gra1";
-            this.gra1.Size = new System.Drawing.Size(79, 42);
+            this.gra1.Size = new System.Drawing.Size(59, 34);
             this.gra1.TabIndex = 12;
             this.gra1.Text = "1年";
             this.gra1.UseVisualStyleBackColor = true;
@@ -245,10 +226,9 @@
             // 
             // graAll
             // 
-            this.graAll.Location = new System.Drawing.Point(8, 30);
-            this.graAll.Margin = new System.Windows.Forms.Padding(4);
+            this.graAll.Location = new System.Drawing.Point(6, 24);
             this.graAll.Name = "graAll";
-            this.graAll.Size = new System.Drawing.Size(39, 28);
+            this.graAll.Size = new System.Drawing.Size(29, 22);
             this.graAll.TabIndex = 13;
             this.graAll.Text = "全";
             this.graAll.UseVisualStyleBackColor = true;
@@ -258,11 +238,9 @@
             // 
             this.jobGroup.Controls.Add(this.jobBox2);
             this.jobGroup.Controls.Add(this.jobBox);
-            this.jobGroup.Location = new System.Drawing.Point(13, 176);
-            this.jobGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.jobGroup.Location = new System.Drawing.Point(10, 141);
             this.jobGroup.Name = "jobGroup";
-            this.jobGroup.Padding = new System.Windows.Forms.Padding(4);
-            this.jobGroup.Size = new System.Drawing.Size(427, 104);
+            this.jobGroup.Size = new System.Drawing.Size(320, 83);
             this.jobGroup.TabIndex = 14;
             this.jobGroup.TabStop = false;
             this.jobGroup.Text = "仕事";
@@ -270,18 +248,18 @@
             // jobBox2
             // 
             this.jobBox2.FormattingEnabled = true;
-            this.jobBox2.Location = new System.Drawing.Point(55, 60);
+            this.jobBox2.Location = new System.Drawing.Point(41, 48);
+            this.jobBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.jobBox2.Name = "jobBox2";
-            this.jobBox2.Size = new System.Drawing.Size(352, 23);
+            this.jobBox2.Size = new System.Drawing.Size(265, 20);
             this.jobBox2.TabIndex = 0;
             // 
             // jobBox
             // 
             this.jobBox.FormattingEnabled = true;
-            this.jobBox.Location = new System.Drawing.Point(55, 22);
-            this.jobBox.Margin = new System.Windows.Forms.Padding(4);
+            this.jobBox.Location = new System.Drawing.Point(41, 18);
             this.jobBox.Name = "jobBox";
-            this.jobBox.Size = new System.Drawing.Size(352, 23);
+            this.jobBox.Size = new System.Drawing.Size(265, 20);
             this.jobBox.TabIndex = 0;
             // 
             // nameView
@@ -293,14 +271,13 @@
             this.graColumn,
             this.nameColumn,
             this.emptyColumn});
-            this.nameView.Location = new System.Drawing.Point(13, 329);
-            this.nameView.Margin = new System.Windows.Forms.Padding(4);
+            this.nameView.Location = new System.Drawing.Point(10, 263);
             this.nameView.MultiSelect = false;
             this.nameView.Name = "nameView";
             this.nameView.ReadOnly = true;
             this.nameView.RowTemplate.Height = 21;
             this.nameView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.nameView.Size = new System.Drawing.Size(427, 329);
+            this.nameView.Size = new System.Drawing.Size(314, 263);
             this.nameView.TabIndex = 15;
             // 
             // bulColumn
@@ -345,47 +322,42 @@
             // bureauTextBox
             // 
             this.bureauTextBox.Enabled = false;
-            this.bureauTextBox.Location = new System.Drawing.Point(29, 288);
-            this.bureauTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.bureauTextBox.Location = new System.Drawing.Point(22, 230);
             this.bureauTextBox.Name = "bureauTextBox";
-            this.bureauTextBox.Size = new System.Drawing.Size(81, 22);
+            this.bureauTextBox.Size = new System.Drawing.Size(62, 19);
             this.bureauTextBox.TabIndex = 16;
             // 
             // gradeTextBox
             // 
             this.gradeTextBox.Enabled = false;
-            this.gradeTextBox.Location = new System.Drawing.Point(140, 288);
-            this.gradeTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.gradeTextBox.Location = new System.Drawing.Point(105, 230);
             this.gradeTextBox.Name = "gradeTextBox";
-            this.gradeTextBox.Size = new System.Drawing.Size(81, 22);
+            this.gradeTextBox.Size = new System.Drawing.Size(62, 19);
             this.gradeTextBox.TabIndex = 17;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(110, 295);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(82, 236);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(22, 15);
+            this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 18;
             this.label1.Text = "局";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(229, 295);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(172, 236);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(179, 15);
+            this.label2.Size = new System.Drawing.Size(143, 12);
             this.label2.TabIndex = 19;
             this.label2.Text = "年 の結果を表示しています。";
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(186, 655);
-            this.sendButton.Margin = new System.Windows.Forms.Padding(4);
+            this.sendButton.Location = new System.Drawing.Point(138, 532);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(79, 24);
+            this.sendButton.Size = new System.Drawing.Size(59, 19);
             this.sendButton.TabIndex = 14;
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
@@ -393,9 +365,9 @@
             // 
             // EnterName
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 692);
+            this.ClientSize = new System.Drawing.Size(335, 554);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -405,7 +377,7 @@
             this.Controls.Add(this.jobGroup);
             this.Controls.Add(this.graGroup);
             this.Controls.Add(this.bulGroup);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EnterName";
             this.Text = "名前入れ";
             this.Load += new System.EventHandler(this.EnterName_Load);
