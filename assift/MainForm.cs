@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using Shiftwork.Payload;
 //hal
 namespace Shiftwork
 {
@@ -120,6 +121,11 @@ namespace Shiftwork
             //Excel.Range test = app.Selection;
             //MessageBox.Show("test.");
             //app.closeApp();
+        }
+
+        private void allPaste_Click(object sender, EventArgs e)
+        {
+            AllPasteFormula.Run(app);
         }
         #endregion //TBD
         #endregion //menuStrip1
