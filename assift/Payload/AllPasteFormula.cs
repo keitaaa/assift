@@ -9,16 +9,14 @@ namespace Shiftwork.Payload
         /// すべてを数式として貼り付け
         /// 例外処理しといた方が安心？
         /// </summary>
-        public static void Run(Excel.Application app)
+        public static void Run(Excel.Workbook book)
         {
-            app.ScreenUpdating = false;
+            book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
 
             int Rows = 24, Columns = 3;   //Rowがy座標
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
-            Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
             Excel.Sheets sheets;
-            book = app.ActiveWorkbook;
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
             Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
@@ -63,7 +61,7 @@ namespace Shiftwork.Payload
 
             }
             MainForm._MainFormInstance.inProrgamUse = false;
-            app.ScreenUpdating = true;
+            book.Application.ScreenUpdating = true;
             MessageBox.Show("終わったよ！");
         }
         public static void clearClipboard()

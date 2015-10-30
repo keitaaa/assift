@@ -123,7 +123,13 @@ namespace Shiftwork
         private void allPaste_Click(object sender, EventArgs e)
         {
             MainForm._MainFormInstance = this;
-            AllPasteFormula.Run(app);
+            AllPasteFormula.Run(book);
+        }
+        
+        private void allCheck_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllCheck.Run(book);
         }
         #endregion //TBD
         #endregion //menuStrip1

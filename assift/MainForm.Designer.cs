@@ -38,6 +38,7 @@
             this.TBDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Function1 = new System.Windows.Forms.ToolStripMenuItem();
             this.allPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.allCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプの表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -130,7 +131,8 @@
             // 
             this.TBDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Function1,
-            this.allPaste});
+            this.allPaste,
+            this.allCheck});
             this.TBDToolStripMenuItem.Name = "TBDToolStripMenuItem";
             this.TBDToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             this.TBDToolStripMenuItem.Text = "開発中";
@@ -148,6 +150,13 @@
             this.allPaste.Size = new System.Drawing.Size(241, 26);
             this.allPaste.Text = "すべてを数式として貼り付け";
             this.allPaste.Click += new System.EventHandler(this.allPaste_Click);
+            // 
+            // allCheck
+            // 
+            this.allCheck.Name = "allCheck";
+            this.allCheck.Size = new System.Drawing.Size(241, 26);
+            this.allCheck.Text = "すべての重複チェック";
+            this.allCheck.Click += new System.EventHandler(this.allCheck_Click);
             // 
             // ヘルプHToolStripMenuItem
             // 
@@ -387,6 +396,7 @@
         private System.Windows.Forms.CheckBox pasteasFormulaBox;
         private System.Windows.Forms.CheckBox autoBackupBox;
         private System.Windows.Forms.ToolStripMenuItem allPaste;
+        private System.Windows.Forms.ToolStripMenuItem allCheck;
     }
 }
 
