@@ -83,12 +83,14 @@ namespace Shiftwork.Payload
                 break;
             }
 
+            //数式として貼り付け
+            //srcは使わないセル（退避用）
             Excel.Range src = target.Worksheet.Cells[MainForm._MainFormInstance.jobtype + 100, 1];
-            src.Formula = value;
-            src.Copy();
-            cpSrc.PasteSpecial(Excel.XlPasteType.xlPasteFormulas);
+            src.Formula = value;//値を数式としてsrcに
+            src.Copy();//クリップボードにコピー
+            cpSrc.PasteSpecial(Excel.XlPasteType.xlPasteFormulas);//cpSrcは宛先です
 
-            // 
+            // クリップボードのクリア
             System.Threading.Thread t = new System.Threading.Thread(clearClipboard);
             t.SetApartmentState(System.Threading.ApartmentState.STA);
             t.Start();

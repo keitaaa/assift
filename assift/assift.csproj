@@ -93,6 +93,8 @@
     </Compile>
     <Compile Include="Library\EWorkbook.cs" />
     <Compile Include="Library\Util.cs" />
+    <Compile Include="Payload\AllPasteFormula.cs" />
+    <Compile Include="Payload\AllCheck.cs" />
     <Compile Include="Payload\SheetChange.cs" />
     <Compile Include="Payload\ErrorCheck.cs" />
     <Compile Include="Payload\BackupTimer.cs" />

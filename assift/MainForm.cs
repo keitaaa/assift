@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using Shiftwork.Payload;
 //hal
 namespace Shiftwork
 {
@@ -117,6 +118,18 @@ namespace Shiftwork
         private void Book_SheetDeactivate(object Sh)
         {
             MessageBox.Show(book.Application.ActiveCell.get_Address());
+        }
+
+        private void allPaste_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllPasteFormula.Run(book);
+        }
+        
+        private void allCheck_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllCheck.Run(book);
         }
         #endregion //TBD
         #endregion //menuStrip1
