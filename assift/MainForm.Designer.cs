@@ -56,11 +56,13 @@
             this.autoBackupBox = new System.Windows.Forms.CheckBox();
             this.stopMonitiorButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.jobToShift = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupDuration)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // startMonitorButton
@@ -333,6 +335,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.jobToShift);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
@@ -341,6 +344,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "変換";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // jobToShift
+            // 
+            this.jobToShift.Location = new System.Drawing.Point(145, 88);
+            this.jobToShift.Name = "jobToShift";
+            this.jobToShift.Size = new System.Drawing.Size(153, 69);
+            this.jobToShift.TabIndex = 0;
+            this.jobToShift.Text = "仕事シフト⇒個人シフト";
+            this.jobToShift.UseVisualStyleBackColor = true;
+            this.jobToShift.Click += new System.EventHandler(this.jobToShift_Click);
             // 
             // MainForm
             // 
@@ -362,6 +375,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupDuration)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -397,6 +411,7 @@
         private System.Windows.Forms.CheckBox autoBackupBox;
         private System.Windows.Forms.ToolStripMenuItem allPaste;
         private System.Windows.Forms.ToolStripMenuItem allCheck;
+        private System.Windows.Forms.Button jobToShift;
     }
 }
 

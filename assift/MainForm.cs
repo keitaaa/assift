@@ -170,8 +170,13 @@ namespace Shiftwork
         }
 
 
+
         #endregion
 
-
+        private void jobToShift_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            JobToShift.Run(book);
+        }
     }
 }
