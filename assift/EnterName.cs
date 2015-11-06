@@ -4,12 +4,17 @@ using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using Shiftwork.Payload;
 
 namespace Shiftwork
 {
     public partial class EnterName : Form
     {
         private string[,] namelist;      // 構成員名簿データ
+        private string[,] jobs;          // 仕事シフトの初期データ
+        private string[,] names;        // 名前シフトのデータ
+        private string[] name;
+
         Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
         Excel.Sheets sheets;             // 操作中のワークシートの集合(Sheets -> get_Itemでシート)
         Excel.Worksheet jobsheet;        // 仕事シフトのワークシート
@@ -35,8 +40,30 @@ namespace Shiftwork
             InitializeComponent();
             this.namelist = namelist;
             this.book = book;
+
+            // ワークブックからワークシートを接続します
+            sheets = book.Worksheets;
+            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
+
+            getData();
+            names = ConvertPrivate.ConvertP(jobs, name);
         }
 
+        private void getData()
+        {
+            // TODO:例外追加
+            Excel.Worksheet psheet;
+            psheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("個人シフト"));
+            Excel.Range prange;
+            prange = psheet.get_Range("D4", "CP206");
+            names =  prange.DeepToString();
+            name = prange.ColumnToString();
+
+            Excel.Range jobrange;
+            jobrange = jobsheet.get_Range("B24", "CN523");
+            jobs = jobrange.DeepToString();
+
+        }
         /// <summary>
         /// フォームがロードされた時のメソッドです。
         /// </summary>
@@ -44,9 +71,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         private void EnterName_Load(object sender, EventArgs e)
         {
-            // ワークブックからワークシートを接続します
-            sheets = book.Worksheets;
-            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
+
 
             // フォームの初期化
             jobBox.Items.Clear();
