@@ -23,20 +23,20 @@ namespace Shiftwork.Payload
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
             //Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
             Excel.Range allRange = jobsheet.Cells[24, 3];
-            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10 , 90 + 10);
+            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10 , 90);
             string[,] allString = allRange.DeepToString();
             string message = "";
             bool isChecked=false;
             bool odd = true;
             string first = "",second="",third="";
 
-            for (Columns = 0; Columns <= 90; Columns++)
+            for (Columns = 0; Columns < 90; Columns++)
             {
-                for (Rows = 0; Rows <= MainForm._MainFormInstance.jobtype; Rows++)
+                for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
                 {
                     if (allString[Rows, Columns] == null || allString[Rows, Columns] == "")
                         continue;
-                    for (int check = 0; check <= MainForm._MainFormInstance.jobtype; check++)
+                    for (int check = 0; check < MainForm._MainFormInstance.jobtype; check++)
                     {
                         isChecked = false;
                         if(allString[Rows,Columns] == allString[check, Columns])
