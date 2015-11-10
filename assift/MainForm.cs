@@ -178,5 +178,23 @@ namespace Shiftwork
             MainForm._MainFormInstance = this;
             JobToShift.Run(book);
         }
+
+        private void allCheckNew_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllCheck.Run(book);
+        }
+
+        private void allPasteFormula_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllPasteFormula.Run(book);
+        }
+
+        private void UnmergeShift_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            Shiftwork.Payload.UnmergeShift.Run(book);
+        }
     }
 }
