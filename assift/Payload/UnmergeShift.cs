@@ -24,9 +24,6 @@ namespace Shiftwork.Payload
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
             idvsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("MySheet"));
             Excel.Range current = idvsheet.Cells[1, 1];　　　//セル単体です
-            string value;
-            int cellCount = 1;
-            Excel.Range wholeRange;
 
             Excel.Range allJobRange = jobsheet.Cells[24, 3];
             allJobRange = allJobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);

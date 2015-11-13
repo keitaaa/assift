@@ -44,7 +44,7 @@ namespace Shiftwork.Payload
             string[,] jobString = JobRange.DeepToString();  //仕事名を入れる
 
 
-            for (Rows = 0; Rows < 500; Rows++)
+            for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for (Columns = 0; Columns < 100; Columns++)
                 {
@@ -52,7 +52,7 @@ namespace Shiftwork.Payload
                         continue;
                     else
                     {
-                        for(int tmp=0; tmp <500; tmp++)
+                        for(int tmp=0; tmp < MainForm._MainFormInstance.jobtype; tmp++)
                         {
 
                             if(allIdvString[tmp,3]==null || allIdvString[tmp, 3] == "")
@@ -70,7 +70,7 @@ namespace Shiftwork.Payload
             allIdvRange.set_Value(Type.Missing, allIdvString);
 
             book.Application.DisplayAlerts = false;
-            for (Rows=1; Rows < 500; Rows++)
+            for (Rows=1; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for(Columns=1; Columns<100; Columns++)
                 {

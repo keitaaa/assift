@@ -44,7 +44,7 @@ namespace Shiftwork
                 return pasteasFormulaBox.Checked;
             }
         }
-        public int jobtype { get; } = 500;
+        public int jobtype { get; } = 600;
         public int startaddr_col { get; } = 3;
         public int startaddr_row { get; } = 24;
 
