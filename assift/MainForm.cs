@@ -196,5 +196,11 @@ namespace Shiftwork
             MainForm._MainFormInstance = this;
             Shiftwork.Payload.UnmergeShift.Run(book);
         }
+
+        private void Draw_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            DrawExcel.Run(book);
+        }
     }
 }

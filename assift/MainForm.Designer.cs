@@ -56,10 +56,11 @@
             this.autoBackupBox = new System.Windows.Forms.CheckBox();
             this.stopMonitiorButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.UnmergeShift = new System.Windows.Forms.Button();
             this.allPasteFormula = new System.Windows.Forms.Button();
             this.allCheckNew = new System.Windows.Forms.Button();
             this.jobToShift = new System.Windows.Forms.Button();
-            this.UnmergeShift = new System.Windows.Forms.Button();
+            this.Draw = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -137,7 +138,8 @@
             this.TBDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Function1,
             this.allPaste,
-            this.allCheck});
+            this.allCheck,
+            this.Draw});
             this.TBDToolStripMenuItem.Name = "TBDToolStripMenuItem";
             this.TBDToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             this.TBDToolStripMenuItem.Text = "開発中";
@@ -351,6 +353,16 @@
             this.tabPage2.Text = "変換";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // UnmergeShift
+            // 
+            this.UnmergeShift.Location = new System.Drawing.Point(298, 143);
+            this.UnmergeShift.Name = "UnmergeShift";
+            this.UnmergeShift.Size = new System.Drawing.Size(150, 99);
+            this.UnmergeShift.TabIndex = 3;
+            this.UnmergeShift.Text = "押さないでください！！";
+            this.UnmergeShift.UseVisualStyleBackColor = true;
+            this.UnmergeShift.Click += new System.EventHandler(this.UnmergeShift_Click);
+            // 
             // allPasteFormula
             // 
             this.allPasteFormula.Location = new System.Drawing.Point(-2, 143);
@@ -381,15 +393,12 @@
             this.jobToShift.UseVisualStyleBackColor = true;
             this.jobToShift.Click += new System.EventHandler(this.jobToShift_Click);
             // 
-            // unmergeShift
+            // Draw
             // 
-            this.UnmergeShift.Location = new System.Drawing.Point(298, 143);
-            this.UnmergeShift.Name = "unmergeShift";
-            this.UnmergeShift.Size = new System.Drawing.Size(150, 99);
-            this.UnmergeShift.TabIndex = 3;
-            this.UnmergeShift.Text = "押さないでください！！";
-            this.UnmergeShift.UseVisualStyleBackColor = true;
-            this.UnmergeShift.Click += new System.EventHandler(this.UnmergeShift_Click);
+            this.Draw.Name = "Draw";
+            this.Draw.Size = new System.Drawing.Size(241, 26);
+            this.Draw.Text = "描画ON";
+            this.Draw.Click += new System.EventHandler(this.Draw_Click);
             // 
             // MainForm
             // 
@@ -451,6 +460,7 @@
         private System.Windows.Forms.Button allPasteFormula;
         private System.Windows.Forms.Button allCheckNew;
         private System.Windows.Forms.Button UnmergeShift;
+        private System.Windows.Forms.ToolStripMenuItem Draw;
     }
 }
 

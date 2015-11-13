@@ -26,11 +26,19 @@ namespace Shiftwork.Payload
             Excel.Range current = idvsheet.Cells[1, 1];　　　//セル単体です
             string value;
             int cellCount = 1;
+            book.Application.DisplayAlerts = false;
             Excel.Range wholeRange;
 
             Excel.Range allJobRange = jobsheet.Cells[24, 3];
             allJobRange = allJobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
-            Excel.Range allIdvRange = idvsheet.Cells[1, 1];
+
+
+            Excel.Range allIdvRange = idvsheet.Cells[4, 5];
+            allIdvRange = allIdvRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
+            allIdvRange.UnMerge();
+            allIdvRange.Clear();
+
+            allIdvRange = idvsheet.Cells[1, 1];
             allIdvRange = allIdvRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
             allIdvRange.Interior.ColorIndex = 2;
             //allIdvRange.ClearContents();
@@ -69,7 +77,7 @@ namespace Shiftwork.Payload
 
             allIdvRange.set_Value(Type.Missing, allIdvString);
 
-            book.Application.DisplayAlerts = false;
+            
             for (Rows=1; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for(Columns=1; Columns<100; Columns++)
