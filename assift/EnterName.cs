@@ -386,6 +386,72 @@ namespace Shiftwork
 
             activerange.Value2 = nameView.CurrentRow.Cells[3].Value;
         }
+
+        private void cellRight_Click(object sender, EventArgs e)
+        {
+            
+            activerange =book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = 0;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+
+            Column+= activerange.MergeArea.Columns.Count;
+            Excel.Range tmp = jobsheet.Cells[Row, Column];
+            tmp.Activate();
+            tmp.MergeArea.Select();
+            tmp.MergeArea.Interior.ColorIndex = 38;
+
+        }
+        private void cellLeft_Click(object sender, EventArgs e)
+        {
+
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = 0;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Column--;
+            Excel.Range tmp = jobsheet.Cells[Row, Column];
+            Column = tmp.MergeArea.Column;
+            tmp = jobsheet.Cells[Row, Column];
+            tmp.Activate();
+            tmp.MergeArea.Select();
+            tmp.MergeArea.Interior.ColorIndex = 38;
+        }
+        private void cellUp_Click(object sender, EventArgs e)
+        {
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = 0;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Row--;
+            Excel.Range tmp = jobsheet.Cells[Row, Column];
+            Column = tmp.MergeArea.Column;
+            tmp = jobsheet.Cells[Row, Column];
+            tmp.Activate();
+            tmp.MergeArea.Select();
+            tmp.MergeArea.Interior.ColorIndex = 38;
+        }
+        private void cellDown_Click(object sender, EventArgs e)
+        {
+
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = 0;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Row++;
+            Excel.Range tmp = jobsheet.Cells[Row, Column];
+            Column = tmp.MergeArea.Column;
+            tmp = jobsheet.Cells[Row, Column];
+            tmp.Activate();
+            tmp.MergeArea.Select();
+            tmp.MergeArea.Interior.ColorIndex = 38;
+        }
+        private void viewUpdate_Click(object sender, EventArgs e)
+        {
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            activeCellUpdate();
+        }
         #endregion
+
     }
 }

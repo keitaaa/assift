@@ -5,6 +5,8 @@ namespace Shiftwork.Payload
 {
     public static class AllPasteFormula
     {
+        
+
         /// <summary>
         /// すべてを数式として貼り付け
         /// 例外処理しといた方が安心？
@@ -24,6 +26,15 @@ namespace Shiftwork.Payload
             string value = "";
             for (Rows = 24; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
+                if(MainForm._MainFormInstance.APFCheckBoxValue)
+                {
+                    if (Rows % 100 == 0)
+                    {
+                        book.Application.ScreenUpdating = true;
+                        MessageBox.Show(Rows / 100 + "00行目まで終わりました");
+                        book.Application.ScreenUpdating = false;
+                    }
+                }
                 for (Columns = 3 ; Columns < 100; Columns++)
                 {
                     current = jobsheet.Cells[Rows, Columns];

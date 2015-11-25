@@ -44,6 +44,13 @@ namespace Shiftwork
                 return pasteasFormulaBox.Checked;
             }
         }
+        public bool APFCheckBoxValue
+        {
+            get
+            {
+                return APFCheckBox.Checked;
+            }
+        }
         public int jobtype { get; } = 600;
         public int startaddr_col { get; } = 3;
         public int startaddr_row { get; } = 24;
@@ -202,5 +209,7 @@ namespace Shiftwork
             MainForm._MainFormInstance = this;
             DrawExcel.Run(book);
         }
+
+
     }
 }

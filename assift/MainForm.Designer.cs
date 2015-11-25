@@ -39,6 +39,7 @@
             this.Function1 = new System.Windows.Forms.ToolStripMenuItem();
             this.allPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.allCheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.Draw = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプの表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -60,7 +61,7 @@
             this.allPasteFormula = new System.Windows.Forms.Button();
             this.allCheckNew = new System.Windows.Forms.Button();
             this.jobToShift = new System.Windows.Forms.Button();
-            this.Draw = new System.Windows.Forms.ToolStripMenuItem();
+            this.APFCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -164,6 +165,13 @@
             this.allCheck.Size = new System.Drawing.Size(241, 26);
             this.allCheck.Text = "すべての重複チェック";
             this.allCheck.Click += new System.EventHandler(this.allCheck_Click);
+            // 
+            // Draw
+            // 
+            this.Draw.Name = "Draw";
+            this.Draw.Size = new System.Drawing.Size(241, 26);
+            this.Draw.Text = "描画ON";
+            this.Draw.Click += new System.EventHandler(this.Draw_Click);
             // 
             // ヘルプHToolStripMenuItem
             // 
@@ -340,6 +348,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.APFCheckBox);
             this.tabPage2.Controls.Add(this.UnmergeShift);
             this.tabPage2.Controls.Add(this.allPasteFormula);
             this.tabPage2.Controls.Add(this.allCheckNew);
@@ -365,9 +374,9 @@
             // 
             // allPasteFormula
             // 
-            this.allPasteFormula.Location = new System.Drawing.Point(-2, 143);
+            this.allPasteFormula.Location = new System.Drawing.Point(-2, 171);
             this.allPasteFormula.Name = "allPasteFormula";
-            this.allPasteFormula.Size = new System.Drawing.Size(150, 99);
+            this.allPasteFormula.Size = new System.Drawing.Size(150, 71);
             this.allPasteFormula.TabIndex = 2;
             this.allPasteFormula.Text = "すべてを数式として貼り付け";
             this.allPasteFormula.UseVisualStyleBackColor = true;
@@ -393,12 +402,16 @@
             this.jobToShift.UseVisualStyleBackColor = true;
             this.jobToShift.Click += new System.EventHandler(this.jobToShift_Click);
             // 
-            // Draw
+            // checkBox
             // 
-            this.Draw.Name = "Draw";
-            this.Draw.Size = new System.Drawing.Size(241, 26);
-            this.Draw.Text = "描画ON";
-            this.Draw.Click += new System.EventHandler(this.Draw_Click);
+            this.APFCheckBox.AutoSize = true;
+            this.APFCheckBox.Location = new System.Drawing.Point(2, 147);
+            this.APFCheckBox.Name = "APFCheckBox";
+            this.APFCheckBox.Size = new System.Drawing.Size(101, 19);
+            this.APFCheckBox.TabIndex = 4;
+            this.APFCheckBox.Text = "確認テキストを表示";
+            this.APFCheckBox.UseVisualStyleBackColor = true;
+            
             // 
             // MainForm
             // 
@@ -421,6 +434,7 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupDuration)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -461,6 +475,7 @@
         private System.Windows.Forms.Button allCheckNew;
         private System.Windows.Forms.Button UnmergeShift;
         private System.Windows.Forms.ToolStripMenuItem Draw;
+        private System.Windows.Forms.CheckBox APFCheckBox;
     }
 }
 
