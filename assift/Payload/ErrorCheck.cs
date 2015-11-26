@@ -27,7 +27,6 @@ namespace Shiftwork.Payload
                 throw new ArgumentOutOfRangeException();
             }
 
-            string ret;
             string[] src = range.ColumnToString();
 
 

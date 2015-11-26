@@ -43,7 +43,14 @@ namespace Shiftwork
                 return pasteasFormulaBox.Checked;
             }
         }
-        public int jobtype { get; } = 500;
+        public bool APFCheckBoxValue
+        {
+            get
+            {
+                return APFCheckBox.Checked;
+            }
+        }
+        public int jobtype { get; } = 600;
         public int startaddr_col { get; } = 3;
         public int startaddr_row { get; } = 24;
 
@@ -169,7 +176,38 @@ namespace Shiftwork
         }
 
 
+
         #endregion
+
+        private void jobToShift_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            JobToShift.Run(book);
+        }
+
+        private void allCheckNew_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllCheck.Run(book);
+        }
+
+        private void allPasteFormula_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            AllPasteFormula.Run(book);
+        }
+
+        private void UnmergeShift_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            Shiftwork.Payload.UnmergeShift.Run(book);
+        }
+
+        private void Draw_Click(object sender, EventArgs e)
+        {
+            MainForm._MainFormInstance = this;
+            DrawExcel.Run(book);
+        }
 
 
     }

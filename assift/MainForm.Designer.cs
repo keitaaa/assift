@@ -39,6 +39,7 @@
             this.Function1 = new System.Windows.Forms.ToolStripMenuItem();
             this.allPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.allCheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.Draw = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプの表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -56,11 +57,17 @@
             this.autoBackupBox = new System.Windows.Forms.CheckBox();
             this.stopMonitiorButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.UnmergeShift = new System.Windows.Forms.Button();
+            this.allPasteFormula = new System.Windows.Forms.Button();
+            this.allCheckNew = new System.Windows.Forms.Button();
+            this.jobToShift = new System.Windows.Forms.Button();
+            this.APFCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupDuration)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // startMonitorButton
@@ -132,7 +139,8 @@
             this.TBDToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Function1,
             this.allPaste,
-            this.allCheck});
+            this.allCheck,
+            this.Draw});
             this.TBDToolStripMenuItem.Name = "TBDToolStripMenuItem";
             this.TBDToolStripMenuItem.Size = new System.Drawing.Size(66, 24);
             this.TBDToolStripMenuItem.Text = "開発中";
@@ -157,6 +165,13 @@
             this.allCheck.Size = new System.Drawing.Size(241, 26);
             this.allCheck.Text = "すべての重複チェック";
             this.allCheck.Click += new System.EventHandler(this.allCheck_Click);
+            // 
+            // Draw
+            // 
+            this.Draw.Name = "Draw";
+            this.Draw.Size = new System.Drawing.Size(241, 26);
+            this.Draw.Text = "描画ON";
+            this.Draw.Click += new System.EventHandler(this.Draw_Click);
             // 
             // ヘルプHToolStripMenuItem
             // 
@@ -333,6 +348,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.APFCheckBox);
+            this.tabPage2.Controls.Add(this.UnmergeShift);
+            this.tabPage2.Controls.Add(this.allPasteFormula);
+            this.tabPage2.Controls.Add(this.allCheckNew);
+            this.tabPage2.Controls.Add(this.jobToShift);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
@@ -341,6 +361,57 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "変換";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // UnmergeShift
+            // 
+            this.UnmergeShift.Location = new System.Drawing.Point(298, 143);
+            this.UnmergeShift.Name = "UnmergeShift";
+            this.UnmergeShift.Size = new System.Drawing.Size(150, 99);
+            this.UnmergeShift.TabIndex = 3;
+            this.UnmergeShift.Text = "押さないでください！！";
+            this.UnmergeShift.UseVisualStyleBackColor = true;
+            this.UnmergeShift.Click += new System.EventHandler(this.UnmergeShift_Click);
+            // 
+            // allPasteFormula
+            // 
+            this.allPasteFormula.Location = new System.Drawing.Point(-2, 171);
+            this.allPasteFormula.Name = "allPasteFormula";
+            this.allPasteFormula.Size = new System.Drawing.Size(150, 71);
+            this.allPasteFormula.TabIndex = 2;
+            this.allPasteFormula.Text = "すべてを数式として貼り付け";
+            this.allPasteFormula.UseVisualStyleBackColor = true;
+            this.allPasteFormula.Click += new System.EventHandler(this.allPasteFormula_Click);
+            // 
+            // allCheckNew
+            // 
+            this.allCheckNew.Location = new System.Drawing.Point(-5, 0);
+            this.allCheckNew.Name = "allCheckNew";
+            this.allCheckNew.Size = new System.Drawing.Size(450, 145);
+            this.allCheckNew.TabIndex = 1;
+            this.allCheckNew.Text = "重複チェック";
+            this.allCheckNew.UseVisualStyleBackColor = true;
+            this.allCheckNew.Click += new System.EventHandler(this.allCheckNew_Click);
+            // 
+            // jobToShift
+            // 
+            this.jobToShift.Location = new System.Drawing.Point(148, 143);
+            this.jobToShift.Name = "jobToShift";
+            this.jobToShift.Size = new System.Drawing.Size(150, 99);
+            this.jobToShift.TabIndex = 0;
+            this.jobToShift.Text = "仕事シフト⇒個人シフト";
+            this.jobToShift.UseVisualStyleBackColor = true;
+            this.jobToShift.Click += new System.EventHandler(this.jobToShift_Click);
+            // 
+            // checkBox
+            // 
+            this.APFCheckBox.AutoSize = true;
+            this.APFCheckBox.Location = new System.Drawing.Point(2, 147);
+            this.APFCheckBox.Name = "APFCheckBox";
+            this.APFCheckBox.Size = new System.Drawing.Size(101, 19);
+            this.APFCheckBox.TabIndex = 4;
+            this.APFCheckBox.Text = "確認テキストを表示";
+            this.APFCheckBox.UseVisualStyleBackColor = true;
+            
             // 
             // MainForm
             // 
@@ -362,6 +433,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupDuration)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -397,6 +470,12 @@
         private System.Windows.Forms.CheckBox autoBackupBox;
         private System.Windows.Forms.ToolStripMenuItem allPaste;
         private System.Windows.Forms.ToolStripMenuItem allCheck;
+        private System.Windows.Forms.Button jobToShift;
+        private System.Windows.Forms.Button allPasteFormula;
+        private System.Windows.Forms.Button allCheckNew;
+        private System.Windows.Forms.Button UnmergeShift;
+        private System.Windows.Forms.ToolStripMenuItem Draw;
+        private System.Windows.Forms.CheckBox APFCheckBox;
     }
 }
 

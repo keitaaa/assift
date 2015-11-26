@@ -5,6 +5,8 @@ namespace Shiftwork.Payload
 {
     public static class AllPasteFormula
     {
+        
+
         /// <summary>
         /// すべてを数式として貼り付け
         /// 例外処理しといた方が安心？
@@ -23,9 +25,17 @@ namespace Shiftwork.Payload
             Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
             Excel.Range wholeRange = null;      //結合されたセル全体です
             string value = "";
-            int cellCount = 0;
-            for (Rows = 24; Rows < 500; Rows++)
+            for (Rows = 24; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
+                if(MainForm._MainFormInstance.APFCheckBoxValue)
+                {
+                    if (Rows % 100 == 0)
+                    {
+                        book.Application.ScreenUpdating = true;
+                        MessageBox.Show(Rows / 100 + "00行目まで終わりました");
+                        book.Application.ScreenUpdating = false;
+                    }
+                }
                 for (Columns = 3 ; Columns < 100; Columns++)
                 {
                     current = jobsheet.Cells[Rows, Columns];
@@ -40,7 +50,7 @@ namespace Shiftwork.Payload
                             wholeRange = current.MergeArea;
 
                             //数式として貼り付け
-                            Excel.Range src = current.Worksheet.Cells[500 + 100, 1];
+                            Excel.Range src = current.Worksheet.Cells[MainForm._MainFormInstance.jobtype + 100, 1];
                             src.Formula = value;//値を数式としてsrcに
                             src.Copy();//クリップボードにコピー
                             wholeRange.PasteSpecial(Excel.XlPasteType.xlPasteFormulas);
