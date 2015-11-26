@@ -11,6 +11,7 @@ namespace Shiftwork.Payload
         /// </summary>
         public static void Run(Excel.Workbook book)
         {
+
             book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
 

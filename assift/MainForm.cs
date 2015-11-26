@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
 using Shiftwork.Payload;
-//hal
 namespace Shiftwork
 {
     public partial class MainForm : Form
@@ -112,7 +111,7 @@ namespace Shiftwork
         #region TBD
         private void Function1_Click(object sender, EventArgs e)
         {
-            book.SheetDeactivate += new Excel.WorkbookEvents_SheetDeactivateEventHandler(Book_SheetDeactivate);
+            MessageBox.Show(book.Application.ActiveCell.get_Address(Type.Missing,Type.Missing,Microsoft.Office.Interop.Excel.XlReferenceStyle.xlR1C1,Type.Missing,Type.Missing));
         }
 
         private void Book_SheetDeactivate(object Sh)
