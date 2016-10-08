@@ -16,15 +16,16 @@ namespace Shiftwork.Payload
             book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
 
-            int Rows = 24, Columns = 3;   //Rowがy座標
+            int Rows = 23, Columns = 3;   //Rowがy座標
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
             Excel.Sheets sheets;
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
             Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
+            Excel.Range next = jobsheet.Cells[Rows,Columns+1];
             Excel.Range wholeRange = null;      //結合されたセル全体です
             string value = "";
-            for (Rows = 24; Rows < MainForm._MainFormInstance.jobtype; Rows++)
+            for (Rows = 23; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 if(MainForm._MainFormInstance.APFCheckBoxValue)
                 {
@@ -41,30 +42,38 @@ namespace Shiftwork.Payload
 
                     if (current.MergeCells)    //セルの結合判定
                     {
-                        if (current.get_Value() == null) { }
 
-                        else
+                        next = jobsheet.Cells[Rows, Columns + 1];
+                        if ((current.get_Value() == null || current.get_Value() == "") && next.get_Value() == null) { }
+                        else 
                         {
-                            value = current.get_Value().ToString();
-                            wholeRange = current.MergeArea;
+                            if (next.get_Value() == current.get_Value())
+                            {
+                                Columns += current.MergeArea.Columns.Count;
+                                Columns--;
+                            }
+                            else
+                            {
+                                value = current.get_Value().ToString();
+                                wholeRange = current.MergeArea;
 
-                            //数式として貼り付け
-                            Excel.Range src = current.Worksheet.Cells[MainForm._MainFormInstance.jobtype + 100, 1];
-                            src.Formula = value;//値を数式としてsrcに
-                            src.Copy();//クリップボードにコピー
-                            wholeRange.PasteSpecial(Excel.XlPasteType.xlPasteFormulas);
+                                //数式として貼り付け
+                                Excel.Range src = current.Worksheet.Cells[MainForm._MainFormInstance.jobtype + 100, 1];
+                                src.Value = value;//値を数式としてsrcに
+                                src.Copy();//クリップボードにコピー
+                                wholeRange.PasteSpecial(Excel.XlPasteType.xlPasteFormulas);
 
-                            // クリップボードのクリア
-                            System.Threading.Thread t = new System.Threading.Thread(clearClipboard);
-                            t.SetApartmentState(System.Threading.ApartmentState.STA);
-                            t.Start();
-                            t.Join();
+                                System.Threading.Thread t = new System.Threading.Thread(clearClipboard);
+                                t.SetApartmentState(System.Threading.ApartmentState.STA);
+                                t.Start();
+                                t.Join();
 
-                           
 
-                            Columns += wholeRange.Columns.Count;
-                            Columns--;
-                            //Columns += cellCount;
+
+                                Columns += wholeRange.Columns.Count;
+                                Columns--;
+                                //Columns += cellCount;
+                            }
                         }
                     }
                 }

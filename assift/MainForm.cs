@@ -51,7 +51,7 @@ namespace Shiftwork
                 return APFCheckBox.Checked;
             }
         }
-        public int jobtype { get; } = 600;
+        public int jobtype { get; } = 750;
         public int startaddr_col { get; } = 3;
         public int startaddr_row { get; } = 24;
 
@@ -210,6 +210,19 @@ namespace Shiftwork
             DrawExcel.Run(book);
         }
 
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

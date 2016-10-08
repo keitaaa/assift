@@ -15,7 +15,7 @@ namespace Shiftwork.Payload
         {
             book.Application.ScreenUpdating = true;
             MainForm._MainFormInstance.inProrgamUse = true;
-
+            book.Application.DisplayAlerts = false;
             int Rows = 0, Columns = 0;   //Rowがy座標
             Excel.Worksheet jobsheet;// 操作中のアプリケーション
             Excel.Worksheet idvsheet;
@@ -104,10 +104,10 @@ namespace Shiftwork.Payload
 
 
 
-            book.Application.DisplayAlerts = true;
-            book.Application.ScreenUpdating = true;
-            MainForm._MainFormInstance.inProrgamUse = false;
 
+            book.Application.ScreenUpdating = true;
+            book.Application.DisplayAlerts = true;
+            MainForm._MainFormInstance.inProrgamUse = false;
         }
     }
 }
