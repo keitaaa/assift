@@ -9,36 +9,25 @@ using Shiftwork.Library;
 
 namespace Shiftwork.Payload
 {
-    public static class JobToShift
+    public static class UnmergeShift
     {
         public static void Run(Excel.Workbook book)
         {
             book.Application.ScreenUpdating = true;
             MainForm._MainFormInstance.inProrgamUse = true;
-            book.Application.DisplayAlerts = false;
+
             int Rows = 0, Columns = 0;   //Rowがy座標
             Excel.Worksheet jobsheet;// 操作中のアプリケーション
             Excel.Worksheet idvsheet;
             Excel.Sheets sheets;
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
-            idvsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("個人シフト"));
+            idvsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("MySheet"));
             Excel.Range current = idvsheet.Cells[1, 1];　　　//セル単体です
-            string value;
-            int cellCount = 1;
-            book.Application.DisplayAlerts = false;
-            Excel.Range wholeRange;
 
             Excel.Range allJobRange = jobsheet.Cells[24, 3];
             allJobRange = allJobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
-
-
-            Excel.Range allIdvRange = idvsheet.Cells[4, 5];
-            allIdvRange = allIdvRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
-            allIdvRange.UnMerge();
-            allIdvRange.Clear();
-
-            allIdvRange = idvsheet.Cells[1, 1];
+            Excel.Range allIdvRange = idvsheet.Cells[1, 1];
             allIdvRange = allIdvRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
             allIdvRange.Interior.ColorIndex = 2;
             //allIdvRange.ClearContents();
@@ -52,7 +41,7 @@ namespace Shiftwork.Payload
             string[,] jobString = JobRange.DeepToString();  //仕事名を入れる
 
 
-            for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
+            for (Rows = 0; Rows < 500; Rows++)
             {
                 for (Columns = 0; Columns < 100; Columns++)
                 {
@@ -60,14 +49,14 @@ namespace Shiftwork.Payload
                         continue;
                     else
                     {
-                        for(int tmp=0; tmp < MainForm._MainFormInstance.jobtype; tmp++)
+                        for (int tmp = 0; tmp < 500; tmp++)
                         {
 
-                            if(allIdvString[tmp,3]==null || allIdvString[tmp, 3] == "")
+                            if (allIdvString[tmp, 3] == null || allIdvString[tmp, 3] == "")
                             { }
-                            else if (allString[Rows,Columns] == allIdvString[tmp,3] )
-                            { 
-                                allIdvString[tmp,Columns+4] = jobString[Rows, 0];
+                            else if (allString[Rows, Columns] == allIdvString[tmp, 3])
+                            {
+                                allIdvString[tmp, Columns + 4] = jobString[Rows, 0];
                                 break;
                             }
                         }
@@ -76,11 +65,11 @@ namespace Shiftwork.Payload
             }
 
             allIdvRange.set_Value(Type.Missing, allIdvString);
-
-            
-            for (Rows=1; Rows < MainForm._MainFormInstance.jobtype; Rows++)
+            /*
+            book.Application.DisplayAlerts = false;
+            for (Rows = 1; Rows < 500; Rows++)
             {
-                for(Columns=1; Columns<100; Columns++)
+                for (Columns = 1; Columns < 100; Columns++)
                 {
                     cellCount = 1;
                     value = allIdvString[Rows - 1, Columns - 1];
@@ -94,7 +83,7 @@ namespace Shiftwork.Payload
 
 
                     wholeRange = idvsheet.Cells[Rows, Columns - cellCount + 1];
-                    wholeRange = wholeRange.get_Resize(1,cellCount);
+                    wholeRange = wholeRange.get_Resize(1, cellCount);
                     wholeRange.Merge();
                     wholeRange.Interior.ColorIndex = 35;
                     wholeRange.BorderAround2();
@@ -103,11 +92,12 @@ namespace Shiftwork.Payload
 
 
 
-
-
-            book.Application.ScreenUpdating = true;
+            
             book.Application.DisplayAlerts = true;
+            */
+            book.Application.ScreenUpdating = true;
             MainForm._MainFormInstance.inProrgamUse = false;
+
         }
     }
 }

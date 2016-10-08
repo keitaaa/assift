@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Shiftwork.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using Shiftwork.Library;
 
 namespace Shiftwork
 {
@@ -158,7 +158,7 @@ namespace Shiftwork
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
-                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)) && !isFilled(namelist[i,4]))
                 {
                     object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
                     DataGridViewRow row = new DataGridViewRow();
@@ -186,7 +186,7 @@ namespace Shiftwork
                 throw new ArgumentNullException();
             }
             // selectなのかactiveなのか要調査
-            Excel.Range tmprange = jobsheet.Cells[24, selectrange.Column];
+            Excel.Range tmprange = jobsheet.Cells[23, selectrange.Column];
             tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
             string[,] tmp = tmprange.DeepToString();
 
@@ -386,6 +386,91 @@ namespace Shiftwork
 
             activerange.Value2 = nameView.CurrentRow.Cells[3].Value;
         }
+        int Cell_color=0;
+        private void cellRight_Click(object sender, EventArgs e)
+        {
+            cellRight.Enabled = false;
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = Cell_color;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+
+            Column += activerange.MergeArea.Columns.Count;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.Activate();
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellRight.Enabled = true;
+
+        }
+
+        private void cellLeft_Click(object sender, EventArgs e)
+        {
+            cellLeft.Enabled = false;
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = Cell_color;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Column--;
+            activerange = jobsheet.Cells[Row, Column];
+            Column -= activerange.MergeArea.Count;
+            Column++;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.Activate();
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellLeft.Enabled = true;
+        }
+        private void cellUp_Click(object sender, EventArgs e)
+        {
+            cellUp.Enabled = false;
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = Cell_color;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Row--;
+            activerange = jobsheet.Cells[Row, Column];
+            Column = activerange.MergeArea.Column;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.Activate();
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellUp.Enabled = true;
+        }
+        private void cellDown_Click(object sender, EventArgs e)
+        {
+            cellDown.Enabled = false;
+            activerange = book.Application.ActiveCell;
+            activerange.Interior.ColorIndex = Cell_color;
+            int Row = activerange.MergeArea.Row;
+            int Column = activerange.MergeArea.Column;
+            Row++;
+            activerange = jobsheet.Cells[Row, Column];
+            Column = activerange.MergeArea.Column;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.Activate();
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellDown.Enabled = true;
+        }
+        private void viewUpdate_Click(object sender, EventArgs e)
+        {
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+        }
         #endregion
+
     }
 }

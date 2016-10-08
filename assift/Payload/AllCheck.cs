@@ -30,10 +30,16 @@ namespace Shiftwork.Payload
             bool odd = true;
             string first = "",second="",third="";
 
-            for (Columns = 0; Columns < 90; Columns++)
+            for (Columns = 1; Columns < 90; Columns++)
             {
-                for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
-                {
+                for (Rows = 1; Rows < MainForm._MainFormInstance.jobtype; Rows++) {                                      
+                    //if (jobsheet.Cells[Rows, Columns].MergeCells)
+                    //{
+                    //    MessageBox.Show("check");
+                    //    //Excel.Range tmp = jobsheet.Cells[Rows,Columns].MergeArea;
+                    //    //if (tmp.Cells[1,2] == null && tmp.Cells[1, 2] == "")
+                    //    //    MessageBox.Show("このシートには誤りがあります．\r\n　数式として貼り付けボタンを行ってください．\r\n");
+                    //}
                     if (allString[Rows, Columns] == null || allString[Rows, Columns] == "")
                         continue;
                     for (int check = 0; check < MainForm._MainFormInstance.jobtype; check++)

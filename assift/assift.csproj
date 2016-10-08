@@ -95,6 +95,8 @@
     <Compile Include="Library\Util.cs" />
     <Compile Include="Payload\AllPasteFormula.cs" />
     <Compile Include="Payload\AllCheck.cs" />
+    <Compile Include="Payload\Class1.cs" />
+    <Compile Include="Payload\UnmergeShift.cs" />
     <Compile Include="Payload\JobToShift.cs" />
     <Compile Include="Payload\SheetChange.cs" />
     <Compile Include="Payload\ErrorCheck.cs" />
