@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using System.Diagnostics;
 
 namespace Shiftwork.Payload
 {
@@ -29,10 +30,11 @@ namespace Shiftwork.Payload
             bool isChecked=false;
             bool odd = true;
             string first = "",second="",third="";
-
-            for (Columns = 1; Columns < 90; Columns++)
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (Columns = 0; Columns < 90; Columns++)
             {
-                for (Rows = 1; Rows < MainForm._MainFormInstance.jobtype; Rows++) {                                      
+                for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++) {                                      
                     //if (jobsheet.Cells[Rows, Columns].MergeCells)
                     //{
                     //    MessageBox.Show("check");
@@ -85,8 +87,11 @@ namespace Shiftwork.Payload
                 }
 
             }
+            sw.Stop();
             message += first + second + third;
-            MessageBox.Show(message);
+            if (message == "")
+                message += "重複はありませんでした";
+            MessageBox.Show(sw.ElapsedMilliseconds+"ミリ秒で処理が終了しました\r\n"+message);
 
             MainForm._MainFormInstance.inProrgamUse = false;
             book.Application.ScreenUpdating = true;

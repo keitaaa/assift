@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
 using Shiftwork.Payload;
-//hal
+
 namespace Shiftwork
 {
     public partial class MainForm : Form
@@ -62,7 +62,6 @@ namespace Shiftwork
 
         Excel.Workbook book;
         Excel.Sheets sheets;
-
         string[,] namelist;
 
         #region menuStrip1

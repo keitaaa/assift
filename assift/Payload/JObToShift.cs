@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
@@ -13,9 +13,9 @@ namespace Shiftwork.Payload
     {
         public static void Run(Excel.Workbook book)
         {
-            book.Application.ScreenUpdating = true;
-            MainForm._MainFormInstance.inProrgamUse = true;
+            book.Application.ScreenUpdating = false;
             book.Application.DisplayAlerts = false;
+            MainForm._MainFormInstance.inProrgamUse = true;
             int Rows = 0, Columns = 0;   //Rowがy座標
             Excel.Worksheet jobsheet;// 操作中のアプリケーション
             Excel.Worksheet idvsheet;
@@ -26,7 +26,6 @@ namespace Shiftwork.Payload
             Excel.Range current = idvsheet.Cells[1, 1];　　　//セル単体です
             string value;
             int cellCount = 1;
-            book.Application.DisplayAlerts = false;
             Excel.Range wholeRange;
 
             Excel.Range allJobRange = jobsheet.Cells[24, 3];
@@ -77,7 +76,8 @@ namespace Shiftwork.Payload
 
             allIdvRange.set_Value(Type.Missing, allIdvString);
 
-            
+            book.Application.ScreenUpdating = true;
+            book.Application.DisplayAlerts = false;
             for (Rows=1; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for(Columns=1; Columns<100; Columns++)
@@ -85,19 +85,23 @@ namespace Shiftwork.Payload
                     cellCount = 1;
                     value = allIdvString[Rows - 1, Columns - 1];
                     if (value == null || value == "")
-                        continue;
-                    while (value == allIdvString[Rows - 1, Columns])
+                    { }
+                    else
                     {
-                        cellCount++;
-                        Columns++;
+                        while (value == allIdvString[Rows - 1, Columns])
+                        {
+                            cellCount++;
+                            Columns++;
+                        }
+
+
+                        wholeRange = idvsheet.Cells[Rows, Columns - cellCount + 1];
+                        wholeRange = wholeRange.get_Resize(1, cellCount);
+                        book.Application.DisplayAlerts = false;
+                        wholeRange.Merge();
+                        wholeRange.Interior.ColorIndex = 35;
+                        wholeRange.BorderAround2();
                     }
-
-
-                    wholeRange = idvsheet.Cells[Rows, Columns - cellCount + 1];
-                    wholeRange = wholeRange.get_Resize(1,cellCount);
-                    wholeRange.Merge();
-                    wholeRange.Interior.ColorIndex = 35;
-                    wholeRange.BorderAround2();
                 }
             }
 
@@ -105,7 +109,7 @@ namespace Shiftwork.Payload
 
 
 
-            book.Application.ScreenUpdating = true;
+            book.Application.ScreenUpdating = false;
             book.Application.DisplayAlerts = true;
             MainForm._MainFormInstance.inProrgamUse = false;
         }

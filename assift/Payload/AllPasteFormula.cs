@@ -1,6 +1,8 @@
 ﻿using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using System.Diagnostics;
+
 namespace Shiftwork.Payload
 {
     public static class AllPasteFormula
@@ -15,7 +17,6 @@ namespace Shiftwork.Payload
         {
             book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
-
             int Rows = 23, Columns = 3;   //Rowがy座標
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
             Excel.Sheets sheets;
@@ -25,26 +26,35 @@ namespace Shiftwork.Payload
             Excel.Range next = jobsheet.Cells[Rows,Columns+1];
             Excel.Range wholeRange = null;      //結合されたセル全体です
             string value = "";
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
             for (Rows = 23; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 if(MainForm._MainFormInstance.APFCheckBoxValue)
                 {
                     if (Rows % 100 == 0)
                     {
+                        sw.Stop();
                         book.Application.ScreenUpdating = true;
-                        MessageBox.Show(Rows / 100 + "00行目まで終わりました");
+                        MessageBox.Show(Rows / 100 + "00行目まで終わりました\r\nここまでの合計処理時間は"+sw.ElapsedMilliseconds+"ミリ秒です");
                         book.Application.ScreenUpdating = false;
+                        sw.Start();
                     }
                 }
-                for (Columns = 3 ; Columns < 100; Columns++)
+                for (Columns = 3 ; Columns < 93; Columns++)
                 {
                     current = jobsheet.Cells[Rows, Columns];
 
-                    if (current.MergeCells)    //セルの結合判定
+                    //if (current.MergeCells)    //セルの結合判定
                     {
 
                         next = jobsheet.Cells[Rows, Columns + 1];
-                        if ((current.get_Value() == null || current.get_Value() == "") && next.get_Value() == null) { }
+                        if (current.get_Value() == null || current.get_Value().ToString() == "")
+                        {
+                            Columns = Columns + current.MergeArea.Columns.Count;
+                            Columns--;
+                        }
                         else 
                         {
                             if (next.get_Value() == current.get_Value())
@@ -79,9 +89,10 @@ namespace Shiftwork.Payload
                 }
 
             }
+            sw.Stop();
             MainForm._MainFormInstance.inProrgamUse = false;
             book.Application.ScreenUpdating = true;
-            MessageBox.Show("終わったよ！");
+            MessageBox.Show("終わったよ！\r\n合計処理時間は"+sw.ElapsedMilliseconds+"ミリ秒です");
         }
         public static void clearClipboard()
         {

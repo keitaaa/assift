@@ -76,7 +76,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         void EnterName_Activated(object sender, EventArgs e)
         {
-            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            //nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
         }
 
@@ -154,11 +154,12 @@ namespace Shiftwork
                 throw new ArgumentNullException();
             }
 
+            int count=0;
             // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
-                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)) && !isFilled(namelist[i,4]))
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
                 {
                     object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
                     DataGridViewRow row = new DataGridViewRow();
@@ -166,7 +167,15 @@ namespace Shiftwork
                     // セルを作成してから、値を設定(この順番が重要)
                     row.CreateCells(nameView);
                     row.SetValues(row_value);
-                    row_list.Add(row);
+                    if (isFilled(namelist[i, 4]))
+                    { 
+                        row_list.Add(row);
+                    }
+                    else
+                    {
+                        row_list.Insert(count, row);
+                        count++;
+                    }
                 }
             }
             // 既存のデータを消去してから、一度に追加する
