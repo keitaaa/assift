@@ -22,7 +22,7 @@ namespace Shiftwork
         /// 選択中のセル（結合セルの場合はすべて）
         /// </summary>
         Excel.Range selectrange;
-
+        string[,] allString;
 
         /// <summary>
         /// EnterNameフォームのコンストラクタです。
@@ -47,6 +47,11 @@ namespace Shiftwork
             // ワークブックからワークシートを接続します
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
+
+            //重複チェック高速化のためのテキスト変換
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
+            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90);
+            allString = allRange.DeepToString();
 
             // フォームの初期化
             jobBox.Items.Clear();
@@ -195,23 +200,38 @@ namespace Shiftwork
                 throw new ArgumentNullException();
             }
             // selectなのかactiveなのか要調査
-            Excel.Range tmprange = jobsheet.Cells[23, selectrange.Column];
-            tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
-            string[,] tmp = tmprange.DeepToString();
+            //Excel.Range tmprange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, selectrange.Column];
+            //tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
+            //string[,] tmp = tmprange.DeepToString();
+            //return (isdeepContained(tmp, name));
 
-            return (isdeepContained(tmp, name));
-        }
-        private bool isdeepContained (string[,] array, string data)
-        {
-            for(int i = 0; i <= array.GetUpperBound(1); i++)
+            int tmp_row = selectrange.Row;
+            int tmp_col = selectrange.Column;
+            int tmp_cnt = selectrange.Columns.Count;
+
+            for(int i=tmp_col-3 ; i < tmp_col-3+tmp_cnt; i++)
             {
-                for(int j = 0; j <= array.GetUpperBound(0); j++)
+                for(int j = 0 ; j <MainForm._MainFormInstance.jobtype; j++)
                 {
-                    if (array[j, i] == data) return true;
+                    if(allString[j,i]==name) return true;
+
                 }
             }
             return false;
         }
+
+        //private bool isdeepContained (string[,] array, string data)
+        //{
+            
+        //    for(int i = 0; i <= array.GetUpperBound(1); i++)
+        //    {
+        //        for(int j = 0; j <= array.GetUpperBound(0); j++)
+        //        {
+        //            if (array[j, i] == data) return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private bool isJobContained(string job, int index)
         {
@@ -476,6 +496,9 @@ namespace Shiftwork
         }
         private void viewUpdate_Click(object sender, EventArgs e)
         {
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
+            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90);
+            allString = allRange.DeepToString();
             activeCellUpdate();
             nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
         }

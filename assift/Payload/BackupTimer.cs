@@ -36,7 +36,7 @@
 //            Backup(null, null);
 //            timer = new Timer();
 //            timer.Tick += new EventHandler(Backup);
-//            timer.Interval = backupInterval * 60000;
+//            timer.Interval = backupInterval * 00;
 //            timer.Enabled = true;
 //        }
 

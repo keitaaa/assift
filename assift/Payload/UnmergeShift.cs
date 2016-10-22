@@ -25,7 +25,7 @@ namespace Shiftwork.Payload
             idvsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("MySheet"));
             Excel.Range current = idvsheet.Cells[1, 1];　　　//セル単体です
 
-            Excel.Range allJobRange = jobsheet.Cells[24, 3];
+            Excel.Range allJobRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
             allJobRange = allJobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
             Excel.Range allIdvRange = idvsheet.Cells[1, 1];
             allIdvRange = allIdvRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
@@ -36,12 +36,12 @@ namespace Shiftwork.Payload
             string[,] allString = allJobRange.DeepToString();　//仕事シフトを入れる
             string[,] allIdvString = allIdvRange.DeepToString(); //個人シフトを入れる
 
-            Excel.Range JobRange = jobsheet.Cells[24, 2];
+            Excel.Range JobRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col-1];
             JobRange = JobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 1);
             string[,] jobString = JobRange.DeepToString();  //仕事名を入れる
 
 
-            for (Rows = 0; Rows < 500; Rows++)
+            for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for (Columns = 0; Columns < 100; Columns++)
                 {
@@ -49,7 +49,7 @@ namespace Shiftwork.Payload
                         continue;
                     else
                     {
-                        for (int tmp = 0; tmp < 500; tmp++)
+                        for (int tmp = 0; tmp < MainForm._MainFormInstance.jobtype; tmp++)
                         {
 
                             if (allIdvString[tmp, 3] == null || allIdvString[tmp, 3] == "")

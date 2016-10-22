@@ -17,7 +17,7 @@ namespace Shiftwork.Payload
         {
             book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
-            int Rows = 23, Columns = 3;   //Rowがy座標
+            int Rows = MainForm._MainFormInstance.startaddr_row, Columns = 3;   //Rowがy座標
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
             Excel.Sheets sheets;
             sheets = book.Worksheets;
@@ -29,7 +29,7 @@ namespace Shiftwork.Payload
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            for (Rows = 23; Rows < MainForm._MainFormInstance.jobtype; Rows++)
+            for (Rows = MainForm._MainFormInstance.startaddr_row; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 if(MainForm._MainFormInstance.APFCheckBoxValue)
                 {
@@ -77,7 +77,6 @@ namespace Shiftwork.Payload
                                 t.SetApartmentState(System.Threading.ApartmentState.STA);
                                 t.Start();
                                 t.Join();
-
 
 
                                 Columns += wholeRange.Columns.Count;

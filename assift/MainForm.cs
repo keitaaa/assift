@@ -51,9 +51,9 @@ namespace Shiftwork
                 return APFCheckBox.Checked;
             }
         }
-        public int jobtype { get; } = 750;
+        public int jobtype { get; } = 600;
         public int startaddr_col { get; } = 3;
-        public int startaddr_row { get; } = 24;
+        public int startaddr_row { get; } = 23;
 
 
         #endregion 

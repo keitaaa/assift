@@ -6,6 +6,7 @@
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
+using System.Diagnostics;
 
 namespace Shiftwork.Payload
 {
@@ -27,8 +28,9 @@ namespace Shiftwork.Payload
             string value;
             int cellCount = 1;
             Excel.Range wholeRange;
+            Stopwatch sw = new Stopwatch();
 
-            Excel.Range allJobRange = jobsheet.Cells[24, 3];
+            Excel.Range allJobRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
             allJobRange = allJobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90 + 10);
 
 
@@ -46,11 +48,11 @@ namespace Shiftwork.Payload
             string[,] allString = allJobRange.DeepToString();　//仕事シフトを入れる
             string[,] allIdvString = allIdvRange.DeepToString(); //個人シフトを入れる
 
-            Excel.Range JobRange = jobsheet.Cells[24, 2];
+            Excel.Range JobRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col-1];
             JobRange = JobRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 1);
             string[,] jobString = JobRange.DeepToString();  //仕事名を入れる
 
-
+            sw.Start();
             for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
                 for (Columns = 0; Columns < 100; Columns++)
@@ -104,11 +106,11 @@ namespace Shiftwork.Payload
                     }
                 }
             }
+            sw.Stop();
 
 
 
-
-
+            MessageBox.Show(sw.ElapsedMilliseconds+"ミリ秒で処理が終了しました．\r\n");
             book.Application.ScreenUpdating = false;
             book.Application.DisplayAlerts = true;
             MainForm._MainFormInstance.inProrgamUse = false;

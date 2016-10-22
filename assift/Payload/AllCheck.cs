@@ -23,7 +23,7 @@ namespace Shiftwork.Payload
             sheets = book.Worksheets;
             jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
             //Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
-            Excel.Range allRange = jobsheet.Cells[24, 3];
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
             allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10 , 90);
             string[,] allString = allRange.DeepToString();
             string message = "";
@@ -60,20 +60,20 @@ namespace Shiftwork.Payload
                                     if (!isChecked)
                                     {
                                         first =  allString[Rows, Columns] + "さんは重複しています                             ";
-                                        second= (Rows + 24) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分                                            ";
+                                        second= (Rows + MainForm._MainFormInstance.startaddr_row) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分                                            ";
                                         isChecked = true;
                                     }
-                                    third = (check + 24) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分                                            ";
+                                    third = (check + MainForm._MainFormInstance.startaddr_row) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分                                            ";
                                 }
                                 else
                                 {
                                     if (!isChecked)
                                     {
                                         first +=  "|" + allString[Rows, Columns] + "さんは重複しています \r\n";
-                                        second += "|" + (Rows + 24) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分\r\n";
+                                        second += "|" + (Rows + MainForm._MainFormInstance.startaddr_row) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分\r\n";
                                         isChecked = true;
                                     }
-                                    third +="|" +  (check + 24) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分\r\n";
+                                    third +="|" +  (check + MainForm._MainFormInstance.startaddr_row) + "行目　" + (Columns / 6 + 7) + "時" + (Columns % 6 * 10) + "分\r\n";
 
                                     message += first + second + third + "\r\n-----------------------------------------------------------------------\r\n";
                                     first = "";
