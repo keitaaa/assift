@@ -15,6 +15,7 @@ namespace Shiftwork.Payload
         /// </summary>
         public static void Run(Excel.Workbook book)
         {
+
             //とても動作が遅いので改良の余地あり
             //currentで見ているセル単体と、その右のセル単体であるnextの値を比べて等しければ
             //その結合セル内にはすべて等しいものが入っていると考えて飛ばします
