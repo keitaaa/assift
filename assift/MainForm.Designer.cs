@@ -43,10 +43,10 @@
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプの表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.assiftのバージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Assift_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.ProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.showInputBox = new System.Windows.Forms.Button();
@@ -57,11 +57,11 @@
             this.autoBackupBox = new System.Windows.Forms.CheckBox();
             this.stopMonitiorButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.APFCheckBox = new System.Windows.Forms.CheckBox();
             this.UnmergeShift = new System.Windows.Forms.Button();
             this.allPasteFormula = new System.Windows.Forms.Button();
             this.allCheckNew = new System.Windows.Forms.Button();
             this.jobToShift = new System.Windows.Forms.Button();
-            this.APFCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -94,6 +94,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(487, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // ファイルToolStripMenuItem
             // 
@@ -106,6 +107,7 @@
             this.ファイルToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.ファイルToolStripMenuItem.Text = "ファイル(F)";
+            this.ファイルToolStripMenuItem.Click += new System.EventHandler(this.ファイルToolStripMenuItem_Click);
             // 
             // AttachProcess
             // 
@@ -178,7 +180,7 @@
             this.ヘルプHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ヘルプの表示ToolStripMenuItem,
             this.toolStripSeparator2,
-            this.assiftのバージョン情報ToolStripMenuItem});
+            this.Assift_Info});
             this.ヘルプHToolStripMenuItem.Name = "ヘルプHToolStripMenuItem";
             this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
             this.ヘルプHToolStripMenuItem.Text = "ヘルプ(H)";
@@ -194,18 +196,19 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
             // 
-            // assiftのバージョン情報ToolStripMenuItem
+            // Assift_Info
             // 
-            this.assiftのバージョン情報ToolStripMenuItem.Name = "assiftのバージョン情報ToolStripMenuItem";
-            this.assiftのバージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
-            this.assiftのバージョン情報ToolStripMenuItem.Text = "assift のバージョン情報";
+            this.Assift_Info.Name = "Assift_Info";
+            this.Assift_Info.Size = new System.Drawing.Size(218, 26);
+            this.Assift_Info.Text = "assift のバージョン情報";
+            this.Assift_Info.Click += new System.EventHandler(this.assift_info_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripProgressBar1});
+            this.ProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 305);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -221,13 +224,13 @@
             this.toolStripStatusLabel1.Text = "Initializing...";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // toolStripProgressBar1
+            // ProgressBar1
             // 
-            this.toolStripProgressBar1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(133, 20);
-            this.toolStripProgressBar1.Value = 78;
-            this.toolStripProgressBar1.Visible = false;
+            this.ProgressBar1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(133, 20);
+            this.ProgressBar1.Value = 78;
+            this.ProgressBar1.Visible = false;
             // 
             // tabControl1
             // 
@@ -362,6 +365,16 @@
             this.tabPage2.Text = "変換";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // APFCheckBox
+            // 
+            this.APFCheckBox.AutoSize = true;
+            this.APFCheckBox.Location = new System.Drawing.Point(2, 147);
+            this.APFCheckBox.Name = "APFCheckBox";
+            this.APFCheckBox.Size = new System.Drawing.Size(145, 19);
+            this.APFCheckBox.TabIndex = 4;
+            this.APFCheckBox.Text = "確認テキストを表示";
+            this.APFCheckBox.UseVisualStyleBackColor = true;
+            // 
             // UnmergeShift
             // 
             this.UnmergeShift.Location = new System.Drawing.Point(298, 143);
@@ -402,17 +415,6 @@
             this.jobToShift.UseVisualStyleBackColor = true;
             this.jobToShift.Click += new System.EventHandler(this.jobToShift_Click);
             // 
-            // checkBox
-            // 
-            this.APFCheckBox.AutoSize = true;
-            this.APFCheckBox.Location = new System.Drawing.Point(2, 147);
-            this.APFCheckBox.Name = "APFCheckBox";
-            this.APFCheckBox.Size = new System.Drawing.Size(101, 19);
-            this.APFCheckBox.TabIndex = 4;
-            this.APFCheckBox.Text = "確認テキストを表示";
-            this.APFCheckBox.UseVisualStyleBackColor = true;
-            
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -425,6 +427,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "assift";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -448,7 +451,7 @@
         private System.Windows.Forms.ToolStripMenuItem AttachProcess;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripProgressBar ProgressBar1;
         private System.Windows.Forms.ToolStripMenuItem DettachProcess;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem Close;
@@ -457,7 +460,7 @@
         private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ヘルプの表示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem assiftのバージョン情報ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Assift_Info;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button stopMonitiorButton;

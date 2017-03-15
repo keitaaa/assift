@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Shiftwork.Library;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-using Shiftwork.Library;
-using Shiftwork.Payload;
-using System.Diagnostics;
+
 
 namespace Shiftwork
 {
@@ -32,7 +31,8 @@ namespace Shiftwork
         /// 選択中のセル（結合セルの場合はすべて）
         /// </summary>
         Excel.Range selectrange;
-        Hashtable ht;
+
+        string[,] allString;
 
         /// <summary>
         /// EnterNameフォームのコンストラクタです。
@@ -82,6 +82,11 @@ namespace Shiftwork
         {
 
 
+            //重複チェック高速化のためのテキスト変換
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
+            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90);
+            allString = allRange.DeepToString();
+
             // フォームの初期化
             jobBox.Items.Clear();
             jobBox.Items.Add("全");
@@ -110,7 +115,7 @@ namespace Shiftwork
         /// <param name="e"></param>
         void EnterName_Activated(object sender, EventArgs e)
         {
-            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            //nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
             ActiveControl = sendButton;
         }
@@ -170,7 +175,8 @@ namespace Shiftwork
             {
                 if ((bureau == "全" || bureau == nameData[i, 1]) && (grade == "全" || grade == nameData[i, 3]) && (job == "全" || isJobContained(job, i)))
                 {
-                    object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };
+                    //object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };//休み時間を考慮しないときはこっち
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
 
                     // セルを作成してから、値を設定(この順番が重要)
@@ -191,19 +197,38 @@ namespace Shiftwork
                 throw new ArgumentNullException();
             }
 
+            int count=0;
+            int[] break_array=new int[namelist.GetUpperBound(0)];
             // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= nameData.GetUpperBound(0); i++)
             {
                 if ((bureau == "全" || bureau == nameData[i, 1]) && (grade == "全" || grade == nameData[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
                 {
-                    object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };
+                    //object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };//休み時間を考慮しないときはこっち
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
-
+                   
                     // セルを作成してから、値を設定(この順番が重要)
                     row.CreateCells(nameView);
                     row.SetValues(row_value);
-                    row_list.Add(row);
+                    if (isFilled(namelist[i, 4]))
+                    { 
+                        row_list.Add(row);
+                    }
+                    else
+                    {
+                        int ins_cnt = 0;
+                        break_array[count] = int.Parse(namelist[i, 17]);
+                        for(int j=0;j<count;j++)
+                        {
+                            if (break_array[j] > break_array[count])
+                                ins_cnt++;
+
+                        }
+                        row_list.Insert(ins_cnt, row);
+                        count++;
+                    }
                 }
             }
             // 既存のデータを消去してから、一度に追加する
@@ -261,21 +286,51 @@ namespace Shiftwork
             {
                 MessageBox.Show(name);
             }
+            //devel
+            //return false;
+        //}
+        //private bool isdeepContained (string[,] array, string data)
+        //{
+        //    for(int i = 0; i <= array.GetUpperBound(1); i++)
+            //end_devel
+            
+            
+            // selectなのかactiveなのか要調査
+            //Excel.Range tmprange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, selectrange.Column];
+            //tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
+            //string[,] tmp = tmprange.DeepToString();
+            //return (isdeepContained(tmp, name))
+            
+            //master
+            int tmp_row = selectrange.Row;
+            int tmp_col = selectrange.Column;
+            int tmp_cnt = selectrange.Columns.Count;
 
-            return false;
-
-        }
-        private bool isdeepContained (string[,] array, string data)
-        {
-            for(int i = 0; i <= array.GetUpperBound(1); i++)
+            for(int i=tmp_col-3 ; i < tmp_col-3+tmp_cnt; i++)
+            //end_master
+            
             {
-                for(int j = 0; j <= array.GetUpperBound(0); j++)
+                for(int j = 0 ; j <MainForm._MainFormInstance.jobtype; j++)
                 {
-                    if (array[j, i] == data) return true;
+                    if(allString[j,i]==name) return true;
+
                 }
             }
             return false;
         }
+
+        //private bool isdeepContained (string[,] array, string data)
+        //{
+            
+        //    for(int i = 0; i <= array.GetUpperBound(1); i++)
+        //    {
+        //        for(int j = 0; j <= array.GetUpperBound(0); j++)
+        //        {
+        //            if (array[j, i] == data) return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private bool isJobContained(string job, int index)
         {
@@ -459,70 +514,105 @@ namespace Shiftwork
 
             activerange.Value2 = nameView.CurrentRow.Cells[3].Value;
         }
-
+        int Cell_color=0;
         private void cellRight_Click(object sender, EventArgs e)
         {
-            
-            activerange =book.Application.ActiveCell;
-            activerange.Interior.ColorIndex = 0;
+            cellRight.Enabled = false;
+            activerange = book.Application.ActiveCell;
+            //セルカラー初期化
+            if (activerange.Interior.ColorIndex == 38)
+            {
+                activerange.Interior.ColorIndex = Cell_color;
+            }
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
 
-            Column+= activerange.MergeArea.Columns.Count;
-            Excel.Range tmp = jobsheet.Cells[Row, Column];
-            tmp.Activate();
-            tmp.MergeArea.Select();
-            tmp.MergeArea.Interior.ColorIndex = 38;
+            Column += activerange.MergeArea.Columns.Count;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.Activate();
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellRight.Enabled = true;
 
         }
+
         private void cellLeft_Click(object sender, EventArgs e)
         {
-
+            cellLeft.Enabled = false;
             activerange = book.Application.ActiveCell;
-            activerange.Interior.ColorIndex = 0;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
+            activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
             Column--;
-            Excel.Range tmp = jobsheet.Cells[Row, Column];
-            Column = tmp.MergeArea.Column;
-            tmp = jobsheet.Cells[Row, Column];
-            tmp.Activate();
-            tmp.MergeArea.Select();
-            tmp.MergeArea.Interior.ColorIndex = 38;
+            activerange = jobsheet.Cells[Row, Column];
+            Column -= activerange.MergeArea.Count;
+            Column++;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.Activate();
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellLeft.Enabled = true;
         }
         private void cellUp_Click(object sender, EventArgs e)
         {
+            cellUp.Enabled = false;
             activerange = book.Application.ActiveCell;
-            activerange.Interior.ColorIndex = 0;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
+            activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
             Row--;
-            Excel.Range tmp = jobsheet.Cells[Row, Column];
-            Column = tmp.MergeArea.Column;
-            tmp = jobsheet.Cells[Row, Column];
-            tmp.Activate();
-            tmp.MergeArea.Select();
-            tmp.MergeArea.Interior.ColorIndex = 38;
+            activerange = jobsheet.Cells[Row, Column];
+            Column = activerange.MergeArea.Column;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.Activate();
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellUp.Enabled = true;
         }
         private void cellDown_Click(object sender, EventArgs e)
         {
-
+            cellDown.Enabled = false;
             activerange = book.Application.ActiveCell;
-            activerange.Interior.ColorIndex = 0;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
+            activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
             Row++;
-            Excel.Range tmp = jobsheet.Cells[Row, Column];
-            Column = tmp.MergeArea.Column;
-            tmp = jobsheet.Cells[Row, Column];
-            tmp.Activate();
-            tmp.MergeArea.Select();
-            tmp.MergeArea.Interior.ColorIndex = 38;
+            activerange = jobsheet.Cells[Row, Column];
+            Column = activerange.MergeArea.Column;
+            activerange = jobsheet.Cells[Row, Column];
+            activerange.Activate();
+            activerange.MergeArea.Select();
+            Cell_color = activerange.Interior.ColorIndex;
+            activerange.MergeArea.Interior.ColorIndex = 38;
+            activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            cellDown.Enabled = true;
         }
         private void viewUpdate_Click(object sender, EventArgs e)
         {
-            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
+            allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10, 90);
+            allString = allRange.DeepToString();
             activeCellUpdate();
+            nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
         }
         #endregion
 

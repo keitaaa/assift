@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using Shiftwork.Library;
 using Shiftwork.Payload;
+
 namespace Shiftwork
 {
     public partial class MainForm : Form
@@ -50,9 +51,9 @@ namespace Shiftwork
                 return APFCheckBox.Checked;
             }
         }
-        public int jobtype { get; } = 600;
+        public int jobtype { get; } =800;
         public int startaddr_col { get; } = 3;
-        public int startaddr_row { get; } = 24;
+        public int startaddr_row { get; } = 23;
 
 
         #endregion 
@@ -61,7 +62,6 @@ namespace Shiftwork
 
         Excel.Workbook book;
         Excel.Sheets sheets;
-
         string[,] namelist;
 
         #region menuStrip1
@@ -87,7 +87,7 @@ namespace Shiftwork
             Excel.Worksheet namesheet;
             namesheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("構成員名簿"));
             Excel.Range namerange;
-            namerange = namesheet.get_Range("A2", "Q204");
+            namerange = namesheet.get_Range("A2", "R204");
             return namerange.DeepToString();
         }
 
@@ -209,6 +209,29 @@ namespace Shiftwork
             DrawExcel.Run(book);
         }
 
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+        
+        private void assift_info_Click(object sender , EventArgs e)
+        {
+
+        }
+
+        private void ファイルToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
