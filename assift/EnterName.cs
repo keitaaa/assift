@@ -140,7 +140,7 @@ namespace Shiftwork
             {
                 if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && (job == "全" || isJobContained(job, i)))
                 {
-                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
 
                     // セルを作成してから、値を設定(この順番が重要)
@@ -160,15 +160,16 @@ namespace Shiftwork
             }
 
             int count=0;
+            int[] break_array=new int[namelist.GetUpperBound(0)];
             // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
             for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
                 if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
                 {
-                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" };
+                    object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
-
+                   
                     // セルを作成してから、値を設定(この順番が重要)
                     row.CreateCells(nameView);
                     row.SetValues(row_value);
@@ -178,7 +179,15 @@ namespace Shiftwork
                     }
                     else
                     {
-                        row_list.Insert(count, row);
+                        int ins_cnt = 0;
+                        break_array[count] = int.Parse(namelist[i, 17]);
+                        for(int j=0;j<count;j++)
+                        {
+                            if (break_array[j] > break_array[count])
+                                ins_cnt++;
+
+                        }
+                        row_list.Insert(ins_cnt, row);
                         count++;
                     }
                 }
@@ -420,7 +429,11 @@ namespace Shiftwork
         {
             cellRight.Enabled = false;
             activerange = book.Application.ActiveCell;
-            activerange.Interior.ColorIndex = Cell_color;
+            //セルカラー初期化
+            if (activerange.Interior.ColorIndex == 38)
+            {
+                activerange.Interior.ColorIndex = Cell_color;
+            }
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
 
@@ -440,6 +453,9 @@ namespace Shiftwork
         {
             cellLeft.Enabled = false;
             activerange = book.Application.ActiveCell;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
             activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
@@ -460,6 +476,9 @@ namespace Shiftwork
         {
             cellUp.Enabled = false;
             activerange = book.Application.ActiveCell;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
             activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;
@@ -479,6 +498,9 @@ namespace Shiftwork
         {
             cellDown.Enabled = false;
             activerange = book.Application.ActiveCell;
+            //セルカラーの初期化
+            if (activerange.Interior.ColorIndex != 38)
+                Cell_color = activerange.Interior.ColorIndex;
             activerange.Interior.ColorIndex = Cell_color;
             int Row = activerange.MergeArea.Row;
             int Column = activerange.MergeArea.Column;

@@ -15,9 +15,17 @@ namespace Shiftwork.Payload
         /// </summary>
         public static void Run(Excel.Workbook book)
         {
+            //とても動作が遅いので改良の余地あり
+            //currentで見ているセル単体と、その右のセル単体であるnextの値を比べて等しければ
+            //その結合セル内にはすべて等しいものが入っていると考えて飛ばします
+            //空白のセルなんかも全部飛ばします
+            //一回String型配列に入れてから、それで結合するセルを確認したほうが圧倒的に速くなる気がします
+            //（基本的に左右と異なる名前が入っているセルがおかしい（数式として入っていない）ためそれを確認すればいい）
+            //つまりif文での判定対象がrangeとかcellだから遅いのでString型配列に入れてからそれで判定すればいいかもしれないということ
+
             book.Application.ScreenUpdating = false;
             MainForm._MainFormInstance.inProrgamUse = true;
-            int Rows = MainForm._MainFormInstance.startaddr_row, Columns = 3;   //Rowがy座標
+            int Rows = MainForm._MainFormInstance.startaddr_row, Columns = 3;
        　   Excel.Worksheet jobsheet;            // 操作中のアプリケーション
             Excel.Sheets sheets;
             sheets = book.Worksheets;
@@ -31,6 +39,7 @@ namespace Shiftwork.Payload
             sw.Start();
             for (Rows = MainForm._MainFormInstance.startaddr_row; Rows < MainForm._MainFormInstance.jobtype; Rows++)
             {
+                //チェックボックスの値によって、途中でメッセージを表示するかどうかを決めています
                 if(MainForm._MainFormInstance.APFCheckBoxValue)
                 {
                     if (Rows % 100 == 0)
@@ -46,23 +55,25 @@ namespace Shiftwork.Payload
                 {
                     current = jobsheet.Cells[Rows, Columns];
 
-                    //if (current.MergeCells)    //セルの結合判定
+                    //if (current.MergeCells)    //セルの結合判定、なぜかコメントアウトされてたけど、これをコメントアウトしたから処理が長くなった可能性。。。？
+                    //問題なかったらアンコメントしてください
                     {
 
                         next = jobsheet.Cells[Rows, Columns + 1];
-                        if (current.get_Value() == null || current.get_Value().ToString() == "")
+                        if (current.get_Value() == null || current.get_Value().ToString() == "")//空白判定、空白分だけ右に移動します
                         {
                             Columns = Columns + current.MergeArea.Columns.Count;
                             Columns--;
                         }
                         else 
                         {
-                            if (next.get_Value() == current.get_Value())
+                            if (next.get_Value() == current.get_Value())//結合セルの最左セルcurrentが、その一つ右のセルnextと等しければ、
+                                                                    //数式として貼り付けされていると考え、結合分だけ飛ばします
                             {
                                 Columns += current.MergeArea.Columns.Count;
                                 Columns--;
                             }
-                            else
+                            else   //数式として貼り付けを行う場合
                             {
                                 value = current.get_Value().ToString();
                                 wholeRange = current.MergeArea;
@@ -81,7 +92,6 @@ namespace Shiftwork.Payload
 
                                 Columns += wholeRange.Columns.Count;
                                 Columns--;
-                                //Columns += cellCount;
                             }
                         }
                     }

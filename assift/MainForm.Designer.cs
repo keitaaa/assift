@@ -43,7 +43,7 @@
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプの表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.assiftのバージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Assift_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.ProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -107,6 +107,7 @@
             this.ファイルToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.ファイルToolStripMenuItem.Text = "ファイル(F)";
+            this.ファイルToolStripMenuItem.Click += new System.EventHandler(this.ファイルToolStripMenuItem_Click);
             // 
             // AttachProcess
             // 
@@ -179,7 +180,7 @@
             this.ヘルプHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ヘルプの表示ToolStripMenuItem,
             this.toolStripSeparator2,
-            this.assiftのバージョン情報ToolStripMenuItem});
+            this.Assift_Info});
             this.ヘルプHToolStripMenuItem.Name = "ヘルプHToolStripMenuItem";
             this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(77, 24);
             this.ヘルプHToolStripMenuItem.Text = "ヘルプ(H)";
@@ -195,11 +196,12 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
             // 
-            // assiftのバージョン情報ToolStripMenuItem
+            // Assift_Info
             // 
-            this.assiftのバージョン情報ToolStripMenuItem.Name = "assiftのバージョン情報ToolStripMenuItem";
-            this.assiftのバージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
-            this.assiftのバージョン情報ToolStripMenuItem.Text = "assift のバージョン情報";
+            this.Assift_Info.Name = "Assift_Info";
+            this.Assift_Info.Size = new System.Drawing.Size(218, 26);
+            this.Assift_Info.Text = "assift のバージョン情報";
+            this.Assift_Info.Click += new System.EventHandler(this.assift_info_Click);
             // 
             // statusStrip1
             // 
@@ -458,7 +460,7 @@
         private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ヘルプの表示ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem assiftのバージョン情報ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Assift_Info;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button stopMonitiorButton;

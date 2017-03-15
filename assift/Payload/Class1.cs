@@ -13,6 +13,9 @@ namespace Shiftwork.Payload
     {
         public static void Run(Excel.Workbook book)
         {
+            //プログラム処理途中に強制終了されて、例えば描画OFFのままになってしまうことがたまにある
+            //そういう時に無理やり元に戻す？ための機能です
+            //割と便利なのでもう少し調整してもいいかもね
             book.Application.ScreenUpdating = true;
             MainForm._MainFormInstance.inProrgamUse = false;
             book.Application.DisplayAlerts = true;

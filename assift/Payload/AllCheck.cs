@@ -14,16 +14,27 @@ namespace Shiftwork.Payload
     {
         public static void Run(Excel.Workbook book)
         {
+
+            //シフトのデータが入っているセルを全てallRangeに入れます
+            //allStringにallRangeの文字列をすべて入れます
+            //allStringの中をfor文でチェックします
+            //Rangeは読み込むのに時間がかかるため、String型に変換してから処理することで実行時間を短くしています
+
+            //実行結果をmessageに入れます、その時に二列にして表示しているのですが、
+            //oddを使って奇数番目を先（左）に、偶数番目を後（右）に入れ、二列に見せかけています
+            //実行時間も計測していますが、十分だと思います
+ 
+            //表示結果が見にくいので、重複結果が重複しているとき（10:00と10:10で同じ人が重複しているとき）
+            //表示結果を一つにまとめてしまうと良いかと思います
             book.Application.ScreenUpdating = true;
             MainForm._MainFormInstance.inProrgamUse = true;
 
-            int Rows = 0, Columns = 0;   //Rowがy座標
-            Excel.Worksheet jobsheet;            // 操作中のアプリケーション
+            int Rows = 0, Columns = 0; 
+            Excel.Worksheet jobsheet; 
             Excel.Sheets sheets;
             sheets = book.Worksheets;
-            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
-            //Excel.Range current = jobsheet.Cells[Rows, Columns];　　　//セル単体です
-            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
+            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト")); 
+            Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];  
             allRange = allRange.get_Resize(MainForm._MainFormInstance.jobtype + 10 , 90);
             string[,] allString = allRange.DeepToString();
             string message = "";
@@ -32,29 +43,23 @@ namespace Shiftwork.Payload
             string first = "",second="",third="";
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            for (Columns = 0; Columns < 90; Columns++)
+            for (Columns = 0; Columns < 90; Columns++)            //右に移動してチェックするfor文、
             {
-                for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++) {                                      
-                    //if (jobsheet.Cells[Rows, Columns].MergeCells)
-                    //{
-                    //    MessageBox.Show("check");
-                    //    //Excel.Range tmp = jobsheet.Cells[Rows,Columns].MergeArea;
-                    //    //if (tmp.Cells[1,2] == null && tmp.Cells[1, 2] == "")
-                    //    //    MessageBox.Show("このシートには誤りがあります．\r\n　数式として貼り付けボタンを行ってください．\r\n");
-                    //}
+                for (Rows = 0; Rows < MainForm._MainFormInstance.jobtype; Rows++) {                //下に移動してチェックする
                     if (allString[Rows, Columns] == null || allString[Rows, Columns] == "")
                         continue;
-                    for (int check = 0; check < MainForm._MainFormInstance.jobtype; check++)
+                    for (int check = 0; check < MainForm._MainFormInstance.jobtype; check++)        //チェックするものがその列にあるかどうか確認する
                     {
-                        isChecked = false;
+                        isChecked = false;　　　　　　//この変数意味ないですね、消すの怖いのでチェックしてから消してください、たぶん問題ないはず
                         if(allString[Rows,Columns] == allString[check, Columns])
                         {
-                            if (Rows > check)
+                            if (Rows > check)           //二回表示されるのを防ぐためにRows>checkの時はエラーとみなしません、上のfor文でcheck=Rowsにすれば解決ですけどね
                                 break;
-                            else if(Rows == check)
+                            else if(Rows == check)      //同じものを比較する意味は無いので当然飛ばします
                             { }
                             else  //Rows < check
                             {
+                                //メッセージを二列に分けているだけの処理
                                 if (odd)
                                 {
                                     if (!isChecked)
@@ -81,6 +86,7 @@ namespace Shiftwork.Payload
                                     third = "";
                                 }
                                 odd = !odd;
+                                //メッセージを二列に分ける処理終了
                             } 
                         }
                     }
