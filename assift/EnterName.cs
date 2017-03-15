@@ -1,27 +1,18 @@
-﻿using Shiftwork.Library;
+using Shiftwork.Library;
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
-
 
 namespace Shiftwork
 {
     public partial class EnterName : Form
     {
-        private string[,] nameData;      // 構成員名簿データ
-        private string[,] jobShiftData;          // 仕事シフトの初期データ
-        private string[,] privateShiftData;        // 名前シフトのデータ
-        private string[] names;
-
+        private string[,] namelist;      // 構成員名簿データ
         Excel.Workbook book;             // 操作中のワークブック(Workbook -> Sheets)
         Excel.Sheets sheets;             // 操作中のワークシートの集合(Sheets -> get_Itemでシート)
         Excel.Worksheet jobsheet;        // 仕事シフトのワークシート
-
-        private long processingTime = 0;
-        private int count = 0;
 
         /// <summary>
         /// アクティブなセル（結合セルの場合は単一セル）
@@ -31,48 +22,21 @@ namespace Shiftwork
         /// 選択中のセル（結合セルの場合はすべて）
         /// </summary>
         Excel.Range selectrange;
-
         string[,] allString;
 
         /// <summary>
         /// EnterNameフォームのコンストラクタです。
         /// 引数として渡された、構成員名簿データと操作中のアプリケーションを自身のメンバに複製します。
         /// </summary>
-        /// <param name="nameData">構成員名簿データ</param>
+        /// <param name="namelist">構成員名簿データ</param>
         /// <param name="app">操作中のExcelアプリケーション</param>
-        public EnterName(string[,] nameData, Excel.Workbook book)
+        public EnterName(string[,] namelist, Excel.Workbook book)
         {
             InitializeComponent();
-            this.nameData = nameData;
+            this.namelist = namelist;
             this.book = book;
-
-            // ワークブックからワークシートを接続します
-            sheets = book.Worksheets;
-            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
-            ht = new Hashtable();
-            getData();
         }
 
-        private void getData()
-        {
-            // TODO:例外追加
-            Excel.Worksheet privateShiftSheet;
-            privateShiftSheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("個人シフト"));
-            Excel.Range privateShiftRange;
-            privateShiftRange = privateShiftSheet.get_Range("D4", "CP206");
-            privateShiftData =  privateShiftRange.DeepToString();
-            names = privateShiftRange.ColumnToString();
-
-            Excel.Range jobShiftRange;
-            jobShiftRange = jobsheet.get_Range("B24", "CN523");
-            jobShiftData = jobShiftRange.DeepToString();
-            privateShiftData = ConvertPrivate.ConvertP(jobShiftData, names);
-
-            for (int i = 0; i < names.Length; i++)
-            {
-                ht.Add(names[i], i.ToString());
-            }
-        }
         /// <summary>
         /// フォームがロードされた時のメソッドです。
         /// </summary>
@@ -80,7 +44,9 @@ namespace Shiftwork
         /// <param name="e"></param>
         private void EnterName_Load(object sender, EventArgs e)
         {
-
+            // ワークブックからワークシートを接続します
+            sheets = book.Worksheets;
+            jobsheet = (Excel.Worksheet)sheets.get_Item(sheets.getSheetIndex("仕事シフト"));
 
             //重複チェック高速化のためのテキスト変換
             Excel.Range allRange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, MainForm._MainFormInstance.startaddr_col];
@@ -117,7 +83,6 @@ namespace Shiftwork
         {
             //nameViewUpdate2(bureauTextBox.Text, gradeTextBox.Text, jobBox.SelectedItem.ToString(), jobBox2.SelectedItem.ToString());
             activeCellUpdate();
-            ActiveControl = sendButton;
         }
 
         /// <summary>
@@ -171,11 +136,10 @@ namespace Shiftwork
 
             // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
-            for (int i = 0; i <= nameData.GetUpperBound(0); i++)
+            for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
-                if ((bureau == "全" || bureau == nameData[i, 1]) && (grade == "全" || grade == nameData[i, 3]) && (job == "全" || isJobContained(job, i)))
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && (job == "全" || isJobContained(job, i)))
                 {
-                    //object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };//休み時間を考慮しないときはこっち
                     object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
 
@@ -189,8 +153,6 @@ namespace Shiftwork
 
         private void nameViewUpdate2(string bureau, string grade, string job,string job2)
         {
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
             // 引数がnullの時の例外処理
             if (bureau == null || grade == null || job == null || job2 ==null)
             {
@@ -201,11 +163,10 @@ namespace Shiftwork
             int[] break_array=new int[namelist.GetUpperBound(0)];
             // 追加するデータの検索
             List<DataGridViewRow> row_list = new List<DataGridViewRow>();
-            for (int i = 0; i <= nameData.GetUpperBound(0); i++)
+            for (int i = 0; i <= namelist.GetUpperBound(0); i++)
             {
-                if ((bureau == "全" || bureau == nameData[i, 1]) && (grade == "全" || grade == nameData[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
+                if ((bureau == "全" || bureau == namelist[i, 1]) && (grade == "全" || grade == namelist[i, 3]) && ((job == "全" || isJobContained(job, i) && job2 == "全") || isJobContained(job, i) || isJobContained(job2, i)))
                 {
-                    //object[] row_value = new object[] { nameData[i, 1], nameData[i, 2], nameData[i, 3], nameData[i, 4], isFilled(nameData[i, 4]) ? "×" : "○" };//休み時間を考慮しないときはこっち
                     object[] row_value = new object[] { namelist[i, 1], namelist[i, 2], namelist[i, 3], namelist[i, 4], isFilled(namelist[i, 4]) ? "×" : "○" ,namelist[i,17]};
                     DataGridViewRow row = new DataGridViewRow();
                    
@@ -234,10 +195,6 @@ namespace Shiftwork
             // 既存のデータを消去してから、一度に追加する
             nameView.Rows.Clear();
             nameView.Rows.AddRange(row_list.ToArray<DataGridViewRow>());
-            //sw.Stop();
-            //long pgTime = sw.ElapsedMilliseconds;
-            //string prt = string.Format("処理時間は {0} ミリ秒です。", pgTime);
-            //MessageBox.Show(prt);
         }
 
         /// <summary>
@@ -245,70 +202,23 @@ namespace Shiftwork
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        //private bool isFilled(string name)
-        //{
-        //    if(name == null)
-        //    {
-        //        throw new ArgumentNullException();
-        //    }
-        //    // selectなのかactiveなのか要調査
-        //    Excel.Range tmprange = jobsheet.Cells[24, selectrange.Column];
-        //    tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
-        //    string[,] tmp = tmprange.DeepToString();
-
-        //    return (isdeepContained(tmp, name));
-        //}
         private bool isFilled(string name)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            int k = int.Parse((string)ht[name]);
-            for (int i = (activerange.Column -3); (activerange.Column + selectrange.Columns.Count -4) >= i; i++)
+            if(name == null)
             {
-                if(privateShiftData[k,i] != null && privateShiftData[k,i] != "")
-                {
-                    sw.Stop();
-                    processingTime += sw.ElapsedMilliseconds;
-                    ++count;
-                    Debug.WriteLine("finished " + count + "times. elapsed " + processingTime + " ms.");
-                    if(sw.ElapsedMilliseconds >= 100)
-                    {
-                        MessageBox.Show(name);
-                    }
-                    return true;
-                }
+                throw new ArgumentNullException();
             }
-            sw.Stop();
-            processingTime += sw.ElapsedMilliseconds;
-            ++count;
-            Debug.WriteLine("finished " + count + "times. elapsed " + processingTime + " ms.");
-            if (sw.ElapsedMilliseconds >= 100)
-            {
-                MessageBox.Show(name);
-            }
-            //devel
-            //return false;
-        //}
-        //private bool isdeepContained (string[,] array, string data)
-        //{
-        //    for(int i = 0; i <= array.GetUpperBound(1); i++)
-            //end_devel
-            
-            
             // selectなのかactiveなのか要調査
             //Excel.Range tmprange = jobsheet.Cells[MainForm._MainFormInstance.startaddr_row, selectrange.Column];
             //tmprange = tmprange.get_Resize(MainForm._MainFormInstance.jobtype, selectrange.Columns.Count);
             //string[,] tmp = tmprange.DeepToString();
-            //return (isdeepContained(tmp, name))
-            
-            //master
+            //return (isdeepContained(tmp, name));
+
             int tmp_row = selectrange.Row;
             int tmp_col = selectrange.Column;
             int tmp_cnt = selectrange.Columns.Count;
 
             for(int i=tmp_col-3 ; i < tmp_col-3+tmp_cnt; i++)
-            //end_master
-            
             {
                 for(int j = 0 ; j <MainForm._MainFormInstance.jobtype; j++)
                 {
@@ -336,7 +246,7 @@ namespace Shiftwork
         {
             for (int i = 7; i <= 16; i++)
             {
-                if (nameData[index,i] == job)
+                if (namelist[index,i] == job)
                 {
                     return true;
                 }
@@ -354,8 +264,8 @@ namespace Shiftwork
             jobBox2.Items.Clear();
             jobBox2.Items.Add("全");
 
-            jobBox.Items.AddRange(Util.jobSearch(nameData, bureau, grade));
-            jobBox2.Items.AddRange(Util.jobSearch(nameData, bureau, grade));
+            jobBox.Items.AddRange(Util.jobSearch(namelist, bureau, grade));
+            jobBox2.Items.AddRange(Util.jobSearch(namelist, bureau, grade));
 
             this.jobBox.SelectedIndex = 0;
             this.jobBox.SelectedIndexChanged += new EventHandler(jobBox_SelectedIndexChanged);
