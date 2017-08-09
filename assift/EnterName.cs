@@ -423,6 +423,7 @@ namespace Shiftwork
                     }
 
             activerange.Value2 = nameView.CurrentRow.Cells[3].Value;
+            viewUpdate.PerformClick();
         }
         int Cell_color=0;
         private void cellRight_Click(object sender, EventArgs e)
